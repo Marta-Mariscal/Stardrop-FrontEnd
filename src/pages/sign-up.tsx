@@ -1,72 +1,70 @@
 import { useState } from "react";
+
+// Components
 import { title } from "@/components/primitives";
+
+// HeroUI
 import { Form } from "@heroui/form";
 import { Input } from "@heroui/input";
 import { Button } from "@heroui/button";
 
-type UserData = {
-  email: string;
-  password: string;
-};
+// Types
+import type { User } from "@/types/user";
 
 export default function DocsPage() {
-  const [action, setAction] = useState<UserData | null>();
+    const [action, setAction] = useState<User>();
 
-  const onResetHandler = () => {
-    setAction(null);
-  };
+    const onResetHandler = () => {
+        setAction(null); 
+    };
 
-  const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    let data = Object.fromEntries(new FormData(e.currentTarget)) as UserData;
+    const onSubmitHandler = (e) => {
+        e.preventDefault();
+        let data = Object.fromEntries(new FormData(e.currentTarget));
 
-    setAction(data);
-  };
+        setAction(data as unknown as User);
+    };
 
-  return (
-    <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
-      <div className="inline-block max-w-lg text-center justify-center">
-        <h1 className={title()}>Sign Up</h1>
-        <div className="form-login-container">
-          <Form
-            className="w-full max-w-xs flex flex-col gap-4"
-            onReset={onResetHandler}
-            onSubmit={onSubmitHandler}
-          >
-            <Input
-              isRequired
-              errorMessage="Please enter a valid email"
-              label="Email"
-              labelPlacement="outside"
-              name="email"
-              placeholder="Enter your email"
-              type="email"
-            />
-            <Input
-              isRequired
-              errorMessage="Please enter a password"
-              label="Password"
-              labelPlacement="outside"
-              name="password"
-              placeholder="Enter your password"
-              type="password"
-            />
-            <div className="flex gap-2">
-              <Button color="secondary" type="submit">
-                Submit
-              </Button>
-              <Button color="secondary" type="reset" variant="flat">
-                Reset
-              </Button>
+    return (
+        <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
+            <div className="inline-block max-w-lg text-center justify-center">
+                <h1 className={title()}>Sign Up</h1>
+                <div className="form-login-container">
+                    <Form className="w-full max-w-xs flex flex-col gap-4" onReset={onResetHandler} onSubmit={onSubmitHandler}>
+                        <Input
+                            isRequired
+                            errorMessage="Please enter a valid email"
+                            label="Email"
+                            labelPlacement="outside"
+                            name="email"
+                            placeholder="Enter your email"
+                            type="email"
+                        />
+                        <Input
+                            isRequired
+                            errorMessage="Please enter a password"
+                            label="Password"
+                            labelPlacement="outside"
+                            name="password"
+                            placeholder="Enter your password"
+                            type="password"
+                        />
+                        <div className="flex gap-2">
+                            <Button color="secondary" type="submit">
+                                Submit
+                            </Button>
+                            <Button color="secondary" type="reset" variant="flat">
+                                Reset
+                            </Button>
+                        </div>
+                        {action && (
+                            <div className="text-small text-default-500">
+                                Action: <code>{JSON.stringify(action)}</code>
+                            </div>
+                        )}
+                    </Form>
+                </div>
             </div>
-            {action && (
-              <div className="text-small text-default-500">
-                Action: <code>{JSON.stringify(action)}</code>
-              </div>
-            )}
-          </Form>
-        </div>
-      </div>
-    </section>
-  );
+        </section>
+    );
 }
