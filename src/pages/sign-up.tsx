@@ -1,4 +1,8 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+// Assets
+import logo from "../../assets/img/stardrop-logo.png";
 
 // Components
 import { title } from "@/components/primitives";
@@ -7,11 +11,13 @@ import { title } from "@/components/primitives";
 import { Form } from "@heroui/form";
 import { Input } from "@heroui/input";
 import { Button } from "@heroui/button";
+import { Link } from "@heroui/link";
 
 // Types
 import type { User } from "@/types/user";
 
 export default function DocsPage() {
+    const navigate = useNavigate();
     const [action, setAction] = useState<User>();
 
     const onResetHandler = () => {
@@ -25,10 +31,16 @@ export default function DocsPage() {
         setAction(data as unknown as User);
     };
 
+    const backLoginHandler = (e) => {
+        navigate('/login', { replace: true })
+    };
+
     return (
         <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
             <div className="inline-block max-w-lg text-center justify-center">
                 <h1 className={title()}>Sign Up</h1>
+                <img src="../assets/img/stardrop-logo.png" alt="Logo" className="w-16 h-16 mx-auto mb-4" />
+                <p className="text-default-500">Create a new account</p>
                 <div className="form-login-container">
                     <Form className="w-full max-w-xs flex flex-col gap-4" onReset={onResetHandler} onSubmit={onSubmitHandler}>
                         <Input
@@ -37,8 +49,35 @@ export default function DocsPage() {
                             label="Email"
                             labelPlacement="outside"
                             name="email"
-                            placeholder="Enter your email"
+                            placeholder="example@stardrop.com"
                             type="email"
+                        />
+                        <Input
+                            isRequired
+                            errorMessage="Please enter a name"
+                            label="Name"
+                            labelPlacement="outside"
+                            name="name"
+                            placeholder="Name"
+                            type="text"
+                        />
+                        <Input
+                            isRequired
+                            errorMessage="Please enter a address"
+                            label="Address"
+                            labelPlacement="outside"
+                            name="address"
+                            placeholder="Address"
+                            type="text"
+                        />
+                        <Input
+                            isRequired
+                            errorMessage="Please enter a valid phone number"
+                            label="Phone Number"
+                            labelPlacement="outside"
+                            name="phone"
+                            placeholder="999999999"
+                            type="number"
                         />
                         <Input
                             isRequired
@@ -51,11 +90,16 @@ export default function DocsPage() {
                         />
                         <div className="flex gap-2">
                             <Button color="secondary" type="submit">
-                                Submit
+                                Sign Up
                             </Button>
-                            <Button color="secondary" type="reset" variant="flat">
-                                Reset
+                            <Button color="secondary" type="reset" variant="flat" onPress={backLoginHandler}>
+                                I already have an account
                             </Button>
+                        </div>
+                        <div>
+                            <Link color="secondary" href="#">
+                                Sign Up as Company 
+                            </Link>
                         </div>
                         {action && (
                             <div className="text-small text-default-500">

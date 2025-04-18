@@ -1,5 +1,8 @@
 import { useState } from "react";
 
+// Assets
+import logo from "../../assets/img/stardrop-logo.png";
+
 // Components
 import { title } from "@/components/primitives";
 
@@ -29,6 +32,8 @@ export default function DocsPage() {
         <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
             <div className="inline-block max-w-lg text-center justify-center">
                 <h1 className={title()}>Login</h1>
+                <img src={logo} alt="Logo" className="w-16 h-16 mx-auto mb-4" />
+                <p className="text-default-500">Login to your account</p>
                 <div className="form-login-container">
                     <Form className="w-full max-w-xs flex flex-col gap-4" onReset={onResetHandler} onSubmit={onSubmitHandler}>
                         <Input
@@ -37,7 +42,7 @@ export default function DocsPage() {
                             label="Email"
                             labelPlacement="outside"
                             name="email"
-                            placeholder="Enter your email"
+                            placeholder="example@stardrop.com"
                             type="email"
                         />
                         <Input
@@ -51,19 +56,26 @@ export default function DocsPage() {
                         />
                         <div className="flex gap-2">
                             <Button color="secondary" type="submit">
-                                Submit
+                                Login
                             </Button>
                             <Button color="secondary" type="reset" variant="flat">
-                                Reset
+                                Create an account
                             </Button>
                         </div>
+
+                        
+                        
+
                         {action && (
                             <div className="text-small text-default-500">
                                 Action: <code>{JSON.stringify(action)}</code>
                             </div>
                         )}
+                        
                     </Form>
+                    
                 </div>
+                
             </div>
         </section>
     );
