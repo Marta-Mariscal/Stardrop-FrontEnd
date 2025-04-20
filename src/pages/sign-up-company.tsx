@@ -9,7 +9,7 @@ import { title } from "@/components/primitives";
 
 // HeroUI
 import { Form } from "@heroui/form";
-import { Input } from "@heroui/input";
+import { Input, Textarea } from "@heroui/input";
 import { Button } from "@heroui/button";
 import { Link } from "@heroui/link";
 import { addToast } from "@heroui/toast";
@@ -20,14 +20,14 @@ import type { User } from "@/types/user";
 // Custom Hooks
 import { useUser } from "@/hooks/useUser";
 
-export default function SignUpPage() {
+export default function SignUpCompanyPage() {
     const navigate = useNavigate();
     const { signUp, loading } = useUser();
 
     const onSubmitHandler = (e) => {
         e.preventDefault();
         let data = Object.fromEntries(new FormData(e.currentTarget));
-        data.type = "customer";
+        data.type = "company";
 
         signUp(data as unknown as User).then(response => {
             console.log("SignUp successful:", response);
@@ -43,7 +43,7 @@ export default function SignUpPage() {
 
             addToast({
                 title: "Logged in successfully",
-                description: "Welcome back! 😊",
+                description: "Welcome to Stardrop! 😊",
                 color: "success"
             });
 
@@ -65,9 +65,9 @@ export default function SignUpPage() {
     return (
         <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
             <div className="inline-block max-w-lg text-center justify-center">
-                <h1 className={title()}>Sign Up</h1>
+                <h1 className={title()}>Sign Up as Company</h1>
                 <img src={logo} alt="Logo" className="w-16 h-16 mx-auto mb-4" />
-                <p className="text-default-500">Create a new account</p>
+                <p className="text-default-500">Create a new account for company</p>
                 <div className="form-login-container">
                     <Form className="w-full max-w-xs flex flex-col gap-4" onSubmit={onSubmitHandler}>
                         <Input
@@ -112,47 +112,27 @@ export default function SignUpPage() {
                             label="Password"
                             labelPlacement="inside"
                             name="password"
-                            placeholder="secretpassword"
+                            placeholder="sercretpassword"
                             type="password"
                         />
-                        <Input
+                        <Textarea
                             isRequired
-                            errorMessage="Please enter your card number"
-                            label="Card Number"
+                            label="Description"
                             labelPlacement="inside"
-                            name="cardNumber"
-                            placeholder="1111 1111 1111 1111"
-                            type="text"
+                            placeholder="This is Stardrop Company!"
+                            errorMessage="Please enter a description"
                         />
                         <Input
                             isRequired
-                            errorMessage="Please enter your card expiration date"
-                            label="Card Expiration Date"
+                            errorMessage="Please enter your website"
+                            label="Website"
                             labelPlacement="inside"
-                            name="cardExpirationDate"
-                            placeholder="MM/YY"
-                            type="text"
-                        />
-                        <Input
-                            isRequired
-                            errorMessage="Please enter your card name"
-                            label="Card Name"
-                            labelPlacement="inside"
-                            name="cardName"
-                            placeholder="STARDROP EXAMPLE"
-                            type="text"
-                        />
-                        <Input
-                            isRequired
-                            errorMessage="Please enter your card CVV"
-                            label="Card CVV"
-                            labelPlacement="inside"
-                            name="cardCVV"
-                            placeholder="111"
-                            type="number"
+                            name="website"
+                            placeholder="www.stardrop.com"
+                            type="url"
                         />
 
-                        {/* TODO: subir icon input type file  */}   
+                        {/* TODO: subir icon input type file  */}
 
                         <div className="flex gap-2">
                             <Button color="secondary" type="submit" isLoading={loading}>
@@ -163,8 +143,8 @@ export default function SignUpPage() {
                             </Button>
                         </div>
                         <div>
-                            <Link color="secondary" href="/sign-up-company">
-                                Sign Up as Company 
+                            <Link color="secondary" href="/sign-up">
+                                Sign Up as customer 
                             </Link>
                         </div>
                     </Form>

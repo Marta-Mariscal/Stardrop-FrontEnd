@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // Assets
 import logo from "../../assets/img/stardrop-logo.png";
@@ -10,22 +11,53 @@ import { title } from "@/components/primitives";
 import { Form } from "@heroui/form";
 import { Input } from "@heroui/input";
 import { Button } from "@heroui/button";
+import { addToast } from "@heroui/toast";
 
 // Types
 import type { Credential } from "@/types/credential";
 
-export default function DocsPage() {
-    const [action, setAction] = useState<Credential>();
+// Custom Hooks
+import { useUser } from "@/hooks/useUser";
 
-    const onResetHandler = () => {
-        setAction(null);
-    };
+export default function LoginPage() {
+    const navigate = useNavigate();
+    const { login, loading } = useUser();
 
     const onSubmitHandler = (e) => {
         e.preventDefault();
         let data = Object.fromEntries(new FormData(e.currentTarget));
 
-        setAction(data as unknown as Credential);
+        login(data as unknown as Credential).then(response => {
+            console.log("Login successful:", response);
+            if (response.error) {
+                console.error("Login error:", response.error);
+                addToast({
+                    title: "Login failed",
+                    description: response.error.message,
+                    color: "danger"
+                });
+                return;
+            }
+
+            addToast({
+                title: "Logged in successfully",
+                description: "Welcome back! 😊",
+                color: "success"
+            });
+
+            navigate('/', { replace: true });
+        }).catch(err => {
+            console.error("Login error:", err);
+            addToast({
+                title: "Login failed",
+                description: "Please check your credentials and try again.",
+                color: "danger"
+            });
+        })
+    };
+
+    const backSignUpHandler = (e) => {
+        navigate('/sign-up', { replace: true })
     };
 
     return (
@@ -35,12 +67,12 @@ export default function DocsPage() {
                 <img src={logo} alt="Logo" className="w-16 h-16 mx-auto mb-4" />
                 <p className="text-default-500">Login to your account</p>
                 <div className="form-login-container">
-                    <Form className="w-full max-w-xs flex flex-col gap-4" onReset={onResetHandler} onSubmit={onSubmitHandler}>
+                    <Form className="w-full max-w-xs flex flex-col gap-4" onSubmit={onSubmitHandler}>
                         <Input
                             isRequired
                             errorMessage="Please enter a valid email"
                             label="Email"
-                            labelPlacement="outside"
+                            labelPlacement="inside"
                             name="email"
                             placeholder="example@stardrop.com"
                             type="email"
@@ -49,29 +81,21 @@ export default function DocsPage() {
                             isRequired
                             errorMessage="Please enter a password"
                             label="Password"
-                            labelPlacement="outside"
+                            labelPlacement="inside"
                             name="password"
                             placeholder="Enter your password"
                             type="password"
                         />
                         <div className="flex gap-2">
-                            <Button color="secondary" type="submit">
+                            <Button color="secondary" type="submit" isLoading={loading}>
                                 Login
                             </Button>
-                            <Button color="secondary" type="reset" variant="flat">
+                            <Button color="secondary" type="reset" onPress={backSignUpHandler} variant="flat">
                                 Create an account
                             </Button>
                         </div>
 
-                        
-                        
-
-                        {action && (
-                            <div className="text-small text-default-500">
-                                Action: <code>{JSON.stringify(action)}</code>
-                            </div>
-                        )}
-                        
+                        {/* TODO: subir icon: input type file */}
                     </Form>
                     
                 </div>
