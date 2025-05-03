@@ -1,5 +1,12 @@
+// TYPES
 import { Credential } from "@/types/credential";
 import { User } from "@/types/user";
+
+// SERVICES
+import { getAuthToken } from "./storage";
+
+// EXCEPTIONS
+import { CustomException } from "@/exceptions/customException";
 
 // CONSTANTS
 const BASE_URL = import.meta.env.BACKEND_BASE_URL || "http://localhost:3000";
@@ -7,7 +14,7 @@ const BASE_URL = import.meta.env.BACKEND_BASE_URL || "http://localhost:3000";
 // METHODS
 export const login = async (credential: Credential) => {
     if (!credential || !credential.email || !credential.password) {
-        throw new Error("Credential is required");
+        throw new Error("Email and password are required");
     }
 
     const response = await fetch(`${BASE_URL}/users/login`, {
@@ -18,14 +25,10 @@ export const login = async (credential: Credential) => {
         body: JSON.stringify(credential)
     });
 
-    if (!response.ok) {
-        throw new Error("User or password is incorrect");
-    }
-
     const { data, error } = await response.json();
 
-    if (error) {
-        throw new Error(error);
+    if (!response.ok) {
+        throw new CustomException(error);
     }
 
     return data;
@@ -36,7 +39,6 @@ export const signUp = async (user: User) => {
         throw new Error("User is required");
     }
 
-    console.log("User signup: ", user);
     const response = await fetch(`${BASE_URL}/users/signup`, {
         headers: {
             'Content-Type': 'application/json'
@@ -45,16 +47,32 @@ export const signUp = async (user: User) => {
         body: JSON.stringify(user)
     });
 
-    console.log("Response: ", response);
+    const { data, error } = await response.json();
 
     if (!response.ok) {
-        throw new Error("Error signing up");
+        throw new CustomException(error);
     }
 
+    return data;
+};
+
+export const logout = async () => {
+    const token = getAuthToken();
+
+    if (!token) throw new Error("Token is required");
+
+    const response = await fetch(`${BASE_URL}/users/logout`, {
+        headers: {
+            
+        },
+        method: 'POST',
+        credentials: 'include'
+    });
+
     const { data, error } = await response.json();
-    
-    if (error) {
-        throw new Error(error);
+
+    if (!response.ok) {
+        throw new CustomException(error);
     }
 
     return data;

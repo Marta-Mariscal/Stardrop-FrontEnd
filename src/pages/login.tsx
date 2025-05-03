@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 // Assets
@@ -16,47 +15,41 @@ import { addToast } from "@heroui/toast";
 // Types
 import type { Credential } from "@/types/credential";
 
-// Custom Hooks
-import { useUser } from "@/hooks/useUser";
+// Stores
+import { useUser } from "@/store/user";
 
 export default function LoginPage() {
     const navigate = useNavigate();
-    const { login, loading } = useUser();
+    const loading = useUser(state => state.loading);
+    const error = useUser(state => state.error);
+    const login = useUser(state => state.login);
+
+    const onSuccessHandler = () => {
+        addToast({
+            title: "Logged in successfully",
+            description: "Welcome back! 😊",
+            color: "success"
+        });
+
+        navigate('/', { replace: true });
+    }
+
+    const onErrorHandler = () => {
+        addToast({
+            title: "Login failed",
+            description: error?.message || "Please try again later.",
+            color: "danger"
+        });
+    }
 
     const onSubmitHandler = (e) => {
         e.preventDefault();
-        let data = Object.fromEntries(new FormData(e.currentTarget));
+        let data = Object.fromEntries(new FormData(e.currentTarget)) as Credential;
 
-        login(data as unknown as Credential).then(response => {
-            console.log("Login successful:", response);
-            if (response.error) {
-                console.error("Login error:", response.error);
-                addToast({
-                    title: "Login failed",
-                    description: response.error.message,
-                    color: "danger"
-                });
-                return;
-            }
-
-            addToast({
-                title: "Logged in successfully",
-                description: "Welcome back! 😊",
-                color: "success"
-            });
-
-            navigate('/', { replace: true });
-        }).catch(err => {
-            console.error("Login error:", err);
-            addToast({
-                title: "Login failed",
-                description: "Please check your credentials and try again.",
-                color: "danger"
-            });
-        })
+        login(data, { onSuccess: onSuccessHandler, onError: onErrorHandler });
     };
 
-    const backSignUpHandler = (e) => {
+    const backSignUpHandler = () => {
         navigate('/sign-up', { replace: true })
     };
 

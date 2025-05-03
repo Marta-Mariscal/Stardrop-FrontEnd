@@ -1,8 +1,8 @@
-import { Garment } from "./garment";
-import { User } from "./user";
+import { type Garment } from "./garment";
+import { type User } from "./user";
 
 export type Order = {
-    _id: String;
+    _id: string;
     owner: User;
     date: Date;
     garments: Garment[];

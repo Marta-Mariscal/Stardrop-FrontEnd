@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 // Assets
@@ -17,48 +16,42 @@ import { addToast } from "@heroui/toast";
 // Types
 import type { User } from "@/types/user";
 
-// Custom Hooks
-import { useUser } from "@/hooks/useUser";
+// Store
+import { useUser } from "@/store/user";
 
 export default function SignUpPage() {
     const navigate = useNavigate();
-    const { signUp, loading } = useUser();
+    const loading = useUser((state) => state.loading);
+    const error = useUser((state) => state.error);
+    const signUp = useUser((state) => state.signUp);
+
+    const onSuccessHandler = () => {
+        addToast({
+            title: "Signed up successfully",
+            description: "Welcome to Stardrop! 🌟",
+            color: "success"
+        });
+
+        navigate('/', { replace: true });
+    }
+
+    const onErrorHandler = () => {
+        addToast({
+            title: "SignUp failed",
+            description: error?.message || "Please try again later.",
+            color: "danger"
+        });
+    }
 
     const onSubmitHandler = (e) => {
         e.preventDefault();
-        let data = Object.fromEntries(new FormData(e.currentTarget));
+        let data = Object.fromEntries(new FormData(e.currentTarget)) as unknown as User;
         data.type = "customer";
 
-        signUp(data as unknown as User).then(response => {
-            console.log("SignUp successful:", response);
-            if (response.error) {
-                console.error("SignUp error:", response.error);
-                addToast({
-                    title: "SignUp failed",
-                    description: response.error.message,
-                    color: "danger"
-                });
-                return;
-            }
-
-            addToast({
-                title: "Logged in successfully",
-                description: "Welcome back! 😊",
-                color: "success"
-            });
-
-            navigate('/', { replace: true });
-        }).catch(err => {
-            console.error("SignUp error:", err);
-            addToast({
-                title: "SignUp failed",
-                description: "Please check your credentials and try again.",
-                color: "danger"
-            });
-        })
+        signUp(data, { onSuccess: onSuccessHandler, onError: onErrorHandler });
     };
 
-    const backLoginHandler = (e) => {
+    const backLoginHandler = () => {
         navigate('/login', { replace: true })
     };
 

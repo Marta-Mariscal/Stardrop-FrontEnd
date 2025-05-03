@@ -1,10 +1,10 @@
 import DefaultLayout from "@/layouts/default";
 
-// Custom Hooks
-import { useUser } from "@/hooks/useUser";
+// Store
+import { useUser } from "@/store/user";
 
 export default function IndexPage() {
-    const { user } = useUser();
+    const user = useUser(state => state.user);
 
     return (
         <DefaultLayout>
