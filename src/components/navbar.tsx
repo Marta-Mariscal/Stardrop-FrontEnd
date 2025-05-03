@@ -2,6 +2,9 @@ import { Button } from "@heroui/button";
 import { Kbd } from "@heroui/kbd";
 import { Link } from "@heroui/link";
 import { Input } from "@heroui/input";
+
+import logo from "../../assets/img/stardrop-logo.png";
+
 import {
   Navbar as HeroUINavbar,
   NavbarBrand,
@@ -17,13 +20,17 @@ import clsx from "clsx";
 import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
 import {
-  TwitterIcon,
-  GithubIcon,
-  DiscordIcon,
+  CartIcon,
   HeartFilledIcon,
   SearchIcon,
 } from "@/components/icons";
-import { Logo } from "@/components/icons";
+import { useNavigate } from "react-router-dom";
+
+const navigate = useNavigate();
+
+const handlerWhishlist = (e) => {
+  navigate('/wishlist', { replace: true })
+};
 
 export const Navbar = () => {
   const searchInput = (
@@ -54,10 +61,11 @@ export const Navbar = () => {
           <Link
             className="flex justify-start items-center gap-1"
             color="foreground"
-            href="/"
+            href="../"
           >
-            <Logo />
-            <p className="font-bold text-inherit">ACME</p>
+            <img src={logo} alt="Logo" className="w-16 h-16 mx-auto mb-1" />
+            <p className="text-secondary font-bold text-center">STARDROP</p>
+
           </Link>
         </NavbarBrand>
         <div className="hidden lg:flex gap-4 justify-start ml-2">
@@ -83,36 +91,40 @@ export const Navbar = () => {
         justify="end"
       >
         <NavbarItem className="hidden sm:flex gap-2">
-          <Link isExternal href={siteConfig.links.twitter} title="Twitter">
-            <TwitterIcon className="text-default-500" />
-          </Link>
-          <Link isExternal href={siteConfig.links.discord} title="Discord">
-            <DiscordIcon className="text-default-500" />
-          </Link>
-          <Link isExternal href={siteConfig.links.github} title="GitHub">
-            <GithubIcon className="text-default-500" />
-          </Link>
           <ThemeSwitch />
         </NavbarItem>
-        <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
-        <NavbarItem className="hidden md:flex">
+        <NavbarItem className="hidden md:flex gap-3">
           <Button
-            isExternal
             as={Link}
             className="text-sm font-normal text-default-600 bg-default-100"
-            href={siteConfig.links.sponsor}
-            startContent={<HeartFilledIcon className="text-danger" />}
+            onPress={handlerWhishlist}
+            startContent={<HeartFilledIcon className="text-secondary" />}
             variant="flat"
           >
-            Sponsor
+            Wishlist
+          </Button>
+          <Button
+            as={Link}
+            className="text-sm font-normal text-default-600 bg-default-100"
+            //href={siteConfig.links.sponsor}
+            startContent={<CartIcon className="text-secondary" />}
+            variant="flat"
+          >
+            Cart
+          </Button>
+          <Button
+            as={Link}
+            className="text-sm font-normal text-default-600 bg-default-100"
+            //href={siteConfig.links.sponsor}
+            startContent={<HeartFilledIcon className="text-secondary" />}
+            variant="flat"
+          >
+            Profile
           </Button>
         </NavbarItem>
       </NavbarContent>
 
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
-        <Link isExternal href={siteConfig.links.github}>
-          <GithubIcon className="text-default-500" />
-        </Link>
         <ThemeSwitch />
         <NavbarMenuToggle />
       </NavbarContent>
