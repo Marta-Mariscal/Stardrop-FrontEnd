@@ -1,5 +1,8 @@
 import { useNavigate } from "react-router-dom";
 
+// Layouts
+import CredentialLayout from "@/layouts/credential";
+
 // Assets
 import logo from "../../assets/img/stardrop-logo.png";
 
@@ -32,8 +35,8 @@ export default function SignUpCompanyPage() {
             color: "success"
         });
 
-        navigate('/', { replace: true });
-    }
+        navigate("/", { replace: true });
+    };
 
     const onErrorHandler = () => {
         addToast({
@@ -41,7 +44,7 @@ export default function SignUpCompanyPage() {
             description: error?.message || "Please try again later.",
             color: "danger"
         });
-    }
+    };
 
     const onSubmitHandler = (e) => {
         e.preventDefault();
@@ -52,97 +55,77 @@ export default function SignUpCompanyPage() {
     };
 
     const backLoginHandler = () => {
-        navigate('/login', { replace: true })
+        navigate("/login", { replace: true });
     };
 
     return (
-        <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
-            <div className="inline-block max-w-lg text-center justify-center">
-                <h1 className={title()}>Sign Up as Company</h1>
-                <img src={logo} alt="Logo" className="w-16 h-16 mx-auto mb-4" />
-                <p className="text-default-500">Create a new account for company</p>
-                <div className="form-login-container">
-                    <Form className="w-full max-w-xs flex flex-col gap-4" onSubmit={onSubmitHandler}>
-                        <Input
-                            isRequired
-                            errorMessage="Please enter a valid email"
-                            label="Email"
-                            labelPlacement="inside"
-                            name="email"
-                            placeholder="example@stardrop.com"
-                            type="email"
-                        />
-                        <Input
-                            isRequired
-                            errorMessage="Please enter a name"
-                            label="Name"
-                            labelPlacement="inside"
-                            name="name"
-                            placeholder="Stardrop"
-                            type="text"
-                        />
-                        <Input
-                            isRequired
-                            errorMessage="Please enter a address"
-                            label="Address"
-                            labelPlacement="inside"
-                            name="address"
-                            placeholder="C/Street 123"
-                            type="text"
-                        />
-                        <Input
-                            isRequired
-                            errorMessage="Please enter a valid phone number"
-                            label="Phone Number"
-                            labelPlacement="inside"
-                            name="phone"
-                            placeholder="999999999"
-                            type="number"
-                        />
-                        <Input
-                            isRequired
-                            errorMessage="Please enter a password"
-                            label="Password"
-                            labelPlacement="inside"
-                            name="password"
-                            placeholder="sercretpassword"
-                            type="password"
-                        />
-                        <Textarea
-                            isRequired
-                            label="Description"
-                            labelPlacement="inside"
-                            placeholder="This is Stardrop Company!"
-                            errorMessage="Please enter a description"
-                        />
-                        <Input
-                            isRequired
-                            errorMessage="Please enter your website"
-                            label="Website"
-                            labelPlacement="inside"
-                            name="website"
-                            placeholder="www.stardrop.com"
-                            type="url"
-                        />
+        <CredentialLayout>
+            <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
+                <div className="inline-block max-w-lg text-center justify-center">
+                    <h1 className={title()}>Sign Up as Company</h1>
+                    <img src={logo} alt="Logo" className="w-16 h-16 mx-auto mb-4" />
+                    <p className="text-default-500">Create a new account for company</p>
+                    <div className="form-login-container">
+                        <Form className="w-full max-w-xs flex flex-col gap-4" onSubmit={onSubmitHandler}>
+                            <Input
+                                isRequired
+                                errorMessage="Please enter a valid email"
+                                label="Email"
+                                labelPlacement="inside"
+                                name="email"
+                                placeholder="example@stardrop.com"
+                                type="email"
+                            />
+                            <Input isRequired errorMessage="Please enter a name" label="Name" labelPlacement="inside" name="name" placeholder="Stardrop" type="text" />
+                            <Input isRequired errorMessage="Please enter a address" label="Address" labelPlacement="inside" name="address" placeholder="C/Street 123" type="text" />
+                            <Input
+                                isRequired
+                                errorMessage="Please enter a valid phone number"
+                                label="Phone Number"
+                                labelPlacement="inside"
+                                name="phone"
+                                placeholder="999999999"
+                                type="number"
+                            />
+                            <Input
+                                isRequired
+                                errorMessage="Please enter a password"
+                                label="Password"
+                                labelPlacement="inside"
+                                name="password"
+                                placeholder="sercretpassword"
+                                type="password"
+                            />
+                            <Textarea isRequired label="Description" labelPlacement="inside" placeholder="This is Stardrop Company!" errorMessage="Please enter a description" />
+                            <Input
+                                isRequired
+                                errorMessage="Please enter your website"
+                                label="Website"
+                                labelPlacement="inside"
+                                name="website"
+                                placeholder="www.stardrop.com"
+                                type="url"
+                            />
 
-                        {/* TODO: subir icon input type file  */}
+                            {/* TODO: subir icon input type file  */}
 
-                        <div className="flex gap-2">
-                            <Button color="secondary" type="submit" isLoading={loading}>
-                                Sign Up
-                            </Button>
-                            <Button color="secondary" type="reset" variant="flat" onPress={backLoginHandler}>
-                                I already have an account
-                            </Button>
-                        </div>
-                        <div>
-                            <Link color="secondary" href="/sign-up">
-                                Sign Up as customer 
-                            </Link>
-                        </div>
-                    </Form>
+                            <div className="flex gap-2">
+                                <Button color="secondary" type="submit" isLoading={loading}>
+                                    Sign Up
+                                </Button>
+                                <Button color="secondary" type="reset" variant="flat" onPress={backLoginHandler}>
+                                    I already have an account
+                                </Button>
+                            </div>
+                            <div>
+                                <Link color="secondary" href="/sign-up">
+                                    Sign Up as customer
+                                </Link>
+                            </div>
+                        </Form>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </CredentialLayout>
     );
 }

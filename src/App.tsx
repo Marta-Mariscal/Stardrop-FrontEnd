@@ -1,21 +1,50 @@
-import { Route, Routes } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
+// Loaders
+import { checkUnauthLoader, checkAuthLoader } from "./loaders/auth";
+
+// Pages
 import IndexPage from "@/pages/index";
 import DocsPage from "@/pages/docs";
 import LoginPage from "@/pages/login";
 import SignUpPage from "@/pages/sign-up";
 import SignUpCompanyPage from "@/pages/sign-up-company";
+import NotFound from "./pages/not-found";
+
+export const router = createBrowserRouter([
+    {
+        path: "/login",
+        element: <LoginPage />,
+        loader: checkUnauthLoader
+    },
+    {
+        path: "/sign-up",
+        element: <SignUpPage />,
+        loader: checkUnauthLoader
+    },
+    {
+        path: "/sign-up-company",
+        element: <SignUpCompanyPage />,
+        loader: checkUnauthLoader
+    },
+    {
+        path: "/",
+        errorElement: <NotFound />,
+        children: [
+            { index: true, element: <IndexPage /> },
+            {
+                path: "/docs",
+                id: "docs",
+                element: <DocsPage />
+            }
+        ],
+        loader: checkAuthLoader
+    },
+    { path: "*", element: <NotFound /> }
+]);
 
 function App() {
-  return (
-    <Routes>
-      <Route element={<IndexPage />} path="/" />
-      <Route element={<DocsPage />} path="/docs" />
-      <Route element={<LoginPage />} path="/login" />
-      <Route element={<SignUpPage />} path="/sign-up" />
-      <Route element={<SignUpCompanyPage />} path="/sign-up-company" />
-    </Routes>
-  );
+    return <RouterProvider router={router} />;
 }
 
 export default App;

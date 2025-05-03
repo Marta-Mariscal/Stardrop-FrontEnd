@@ -1,0 +1,17 @@
+import { Link } from "@heroui/link";
+
+import { ThemeSwitch } from "@/components/theme-switch";
+
+export default function CredentialLayout({ children }: { children: React.ReactNode }) {
+    return (
+        <div className="relative flex flex-col h-screen">
+            <ThemeSwitch />
+            <main className="container mx-auto max-w-7xl px-6 flex-grow pt-16">{children}</main>
+            <footer className="w-full flex items-center justify-center py-3">
+                <Link isExternal className="flex items-center gap-1 text-current" href="https://google.com">
+                    <span className="text-default-600">footer stardrop</span>
+                </Link>
+            </footer>
+        </div>
+    );
+}
