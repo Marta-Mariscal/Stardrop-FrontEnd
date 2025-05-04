@@ -29,7 +29,6 @@ export const router = createBrowserRouter([
     },
     {
         path: "/",
-        errorElement: <NotFound />,
         children: [
             { index: true, element: <IndexPage /> },
             {
@@ -40,7 +39,7 @@ export const router = createBrowserRouter([
         ],
         loader: checkAuthLoader
     },
-    { path: "*", element: <NotFound /> }
+    { path: "*", element: <NotFound />, loader: checkAuthLoader }
 ]);
 
 function App() {

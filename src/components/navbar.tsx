@@ -53,7 +53,7 @@ export const Navbar = () => {
         <HeroUINavbar maxWidth="xl" position="sticky">
             <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
                 <NavbarBrand className="gap-3 max-w-fit">
-                    <Link className="flex justify-start items-center gap-1" color="foreground" href="../">
+                    <Link className="flex justify-start items-center gap-1" color="foreground" href="/">
                         <img src={logo} alt="Logo" className="w-16 h-16 mx-auto mb-1" />
                         <p className="text-secondary font-bold text-center">STARDROP</p>
                     </Link>
