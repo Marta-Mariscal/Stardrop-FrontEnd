@@ -24,7 +24,6 @@ import { useUser } from "@/store/user";
 export default function LoginPage() {
     const navigate = useNavigate();
     const loading = useUser((state) => state.loading);
-    const error = useUser((state) => state.error);
     const login = useUser((state) => state.login);
 
     const onSuccessHandler = () => {
@@ -37,7 +36,7 @@ export default function LoginPage() {
         navigate("/", { replace: true });
     };
 
-    const onErrorHandler = () => {
+    const onErrorHandler = (error: Error) => {
         addToast({
             title: "Login failed",
             description: error?.message || "Please try again later.",

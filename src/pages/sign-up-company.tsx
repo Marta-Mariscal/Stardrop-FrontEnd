@@ -25,7 +25,6 @@ import { useUser } from "@/store/user";
 export default function SignUpCompanyPage() {
     const navigate = useNavigate();
     const loading = useUser((state) => state.loading);
-    const error = useUser((state) => state.error);
     const signUp = useUser((state) => state.signUp);
 
     const onSuccessHandler = () => {
@@ -38,7 +37,7 @@ export default function SignUpCompanyPage() {
         navigate("/", { replace: true });
     };
 
-    const onErrorHandler = () => {
+    const onErrorHandler = (error: Error) => {
         addToast({
             title: "SignUp failed",
             description: error?.message || "Please try again later.",
