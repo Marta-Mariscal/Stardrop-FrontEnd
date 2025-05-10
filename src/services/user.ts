@@ -1,19 +1,19 @@
-// TYPES
+// Types
 import { type Credential } from "@/types/credential";
 import { type UserToken } from "@/types/userToken";
 import { type User } from "@/types/user";
 import { type Data } from "@/types/data";
 
-// SERVICES
+// Services
 import { getAuthToken } from "./storage";
 
-// EXCEPTIONS
+// Exceptions
 import { CustomException } from "@/exceptions/customException";
 
-// CONSTANTS
+// Constants
 const BASE_URL = import.meta.env.BACKEND_BASE_URL || "http://localhost:3000";
 
-// METHODS
+// Methods
 export const whoami: () => Promise<User> = async () => {
     const token = getAuthToken();
 
