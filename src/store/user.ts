@@ -1,21 +1,12 @@
-// Zustand
-import { create } from 'zustand';
-
-// Types
-import { type Credential } from "@/types/credential";
+import { create } from 'zustand';import { type Credential } from "@/types/credential";
 import { type User } from "@/types/user";
 import { type UserToken } from '@/types/userToken';
 import { type Data } from '@/types/data';
 import { type Error } from '@/types/error';
-
-// Services
 import { login, signUp, logout, whoami } from '@/services/user';
 import { removeAuthToken, setAuthToken } from '@/services/storage';
-
-// Exceptions
 import { CustomException } from '@/exceptions/customException';
 
-// Local Types
 interface UserStore {
     user: User;
     loading?: boolean;
@@ -26,7 +17,6 @@ interface UserStore {
     logout: (callback?: { onSuccess?: (response: Data) => void; onError?: (error: Error) => void; onFinally?: () => void }) => void;
 }
 
-// Store
 export const useUser = create<UserStore>((set, get) => ({
         user: null,
         loading: false,
@@ -36,7 +26,7 @@ export const useUser = create<UserStore>((set, get) => ({
             whoami()
             .then((response: User) => {
                 set({ user: response });
-                if (callback?.onSuccess) callback.onSuccess(response);
+                if (callback?.onSuccess) callback.onSuccess(get().user);
             }
             ).catch((error) => {
                 if (error instanceof CustomException) set({ error: error.detail });

@@ -1,9 +1,5 @@
 import type { NavigateOptions } from "react-router-dom";
-
-// Hero UI
-import {ToastProvider} from "@heroui/toast";
-
-// Providers
+import {ToastProvider} from "@heroui/react";
 import { UserProvider } from "./context/user";
 
 declare module "@react-types/shared" {
@@ -14,6 +10,7 @@ declare module "@react-types/shared" {
 
 export function Provider({ children }: { children: React.ReactNode }) {
     return (
+        //cada vez que se cambie de pagina o se haga un refresh se va a volver a comprobar el token
         <UserProvider>
             <ToastProvider />
             {children}

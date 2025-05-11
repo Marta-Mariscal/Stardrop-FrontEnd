@@ -1,24 +1,9 @@
 import { useNavigate } from "react-router-dom";
-
-// Layouts
 import CredentialLayout from "@/layouts/credential";
-
-// Assets
 import logo from "../../assets/img/stardrop-logo.png";
-
-// Components
 import { title } from "@/components/primitives";
-
-// HeroUI
-import { Form } from "@heroui/form";
-import { Input } from "@heroui/input";
-import { Button } from "@heroui/button";
-import { addToast } from "@heroui/toast";
-
-// Types
+import { Form, Input, Button, addToast } from "@heroui/react";
 import type { Credential } from "@/types/credential";
-
-// Stores
 import { useUser } from "@/store/user";
 
 export default function LoginPage() {

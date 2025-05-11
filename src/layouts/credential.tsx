@@ -1,5 +1,4 @@
-import { Link } from "@heroui/link";
-
+import { Link } from "@heroui/react";
 import { ThemeSwitch } from "@/components/theme-switch";
 
 export default function CredentialLayout({ children }: { children: React.ReactNode }) {

@@ -5,21 +5,20 @@ import { type Wishlist } from "./wishlist";
 export type Garment = {
     _id: string;
     name: string;
-    description: boolean;
+    description: string;
     size: string;
-    colors: {
-        color: "red" | "pink" | "purple" | "blue" | "green" | "yellow" | "orange" | "brown" | "black" | "white";
-    }[];
+    colors: string[];
     price: number;
-    category: "shirt" | "pant" | "dress" | "outerwear" | "accessory" | "other" | "footwear";
-    gender: "man" | "woman" | "unisex" | "child";
+    category: string;
+    gender: string;
     image?: string;
-    type: "new" | "second-hand";
+    type: string;
     web?: string;
-    status: "Brand New" | "Like new" | "Used" | "Fair condition" | "Damaged";
-    owner: User; 
-    createdAt: Date;
-    updatedAt: Date;
+    status: string;
+    owner?: User; 
+    createdAt?: Date;
+    updatedAt?: Date;
+    __v: number;
 
     orders?: Order[];
     wishlist?: Wishlist;

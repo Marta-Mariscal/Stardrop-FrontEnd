@@ -1,5 +1,4 @@
-import { Link } from "@heroui/link";
-
+import { Link } from "@heroui/react";
 import { Navbar } from "@/components/navbar";
 
 export default function DefaultLayout({ children }: { children: React.ReactNode }) {

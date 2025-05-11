@@ -1,19 +1,10 @@
 import { useNavigate } from "react-router-dom";
-
-// Hero UI
-import { Button } from "@heroui/button";
-import { Link } from "@heroui/link";
-import { Navbar as HeroUINavbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem } from "@heroui/navbar";
-import { link as linkStyles } from "@heroui/theme";
+import { Button, Link, Navbar as HeroUINavbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, link as linkStyles } from "@heroui/react";
 import clsx from "clsx";
 import { ThemeSwitch } from "@/components/theme-switch";
-
-// Assets
 import logo from "../../assets/img/stardrop-logo.png";
 import { CartIcon, HeartFilledIcon } from "@/components/icons";
 import { siteConfig } from "@/config/site";
-
-// Custom Components
 import { SearchInput } from "./searchInput";
 
 export const Navbar = () => {

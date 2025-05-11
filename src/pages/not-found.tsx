@@ -1,10 +1,6 @@
 import { useNavigate } from "react-router-dom";
-
-// Layout
 import DefaultLayout from "@/layouts/default";
-
-// Hero UI
-import { Button } from "@heroui/button";
+import { Button } from "@heroui/react";
 
 export default function NotFoundPage() {
     const navigate = useNavigate();

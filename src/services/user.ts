@@ -1,19 +1,13 @@
-// Types
 import { type Credential } from "@/types/credential";
 import { type UserToken } from "@/types/userToken";
 import { type User } from "@/types/user";
 import { type Data } from "@/types/data";
-
-// Services
 import { getAuthToken } from "./storage";
-
-// Exceptions
 import { CustomException } from "@/exceptions/customException";
 
-// Constants
+
 const BASE_URL = import.meta.env.BACKEND_BASE_URL || "http://localhost:3000";
 
-// Methods
 export const whoami: () => Promise<User> = async () => {
     const token = getAuthToken();
 
@@ -34,7 +28,7 @@ export const whoami: () => Promise<User> = async () => {
 }
 
 export const login: (credential: Credential) => Promise<UserToken> = async (credential: Credential) => {
-    if (!credential || !credential.email || !credential.password) throw new Error("Email and password are required");
+    if (!credential || !credential.email || !credential.password) throw new CustomException({ message: "Email and password are required" });
 
     const response = await fetch(`${BASE_URL}/users/login`, {
         headers: {
@@ -52,7 +46,7 @@ export const login: (credential: Credential) => Promise<UserToken> = async (cred
 };
 
 export const signUp: (user: User) => Promise<UserToken> = async (user: User) => {
-    if (!user) throw new Error("User is required");
+    if (!user) throw new CustomException({ message: "User is required" });
 
     const response = await fetch(`${BASE_URL}/users/signup`, {
         headers: {

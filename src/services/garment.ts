@@ -1,21 +1,73 @@
-// Types
 import { type Garment } from "@/types/garment";
-
-// Services
 import { getAuthToken } from "./storage";
-
-// Exceptions
 import { CustomException } from "@/exceptions/customException";
+import { GarmentServiceParams } from "@/types/garment-service-params";
 
-// Constants
+
 const BASE_URL = import.meta.env.BACKEND_BASE_URL || "http://localhost:3000";
 
-export const getGarments: () => Promise<Garment> = async () => {
+const getUrlParams = (params?: GarmentServiceParams) => {
+    if (!params) return '';
+
+    let output = [];
+
+    if (params?.search) {
+        output.push(`search=${params.search}`);
+    }
+
+    if (params?.categories) {
+        output.push(`categories=${params.categories.join(",")}`);
+    }
+
+    if (params?.genders) {
+        output.push(`genders=${params.genders.join(",")}`);
+    }
+
+    if (params?.types) {
+        output.push(`types=${params.types.join(",")}`);
+    } 
+
+    if (params?.colors) {
+        output.push(`colors=${params.colors.join(",")}`);
+    }
+
+    if (params?.states) {
+        output.push(`states=${params.states.join(",")}`);
+    }
+
+    if (params?.minPrice) {
+        output.push(`minPrice=${params.minPrice}`);
+    }
+
+    if (params?.maxPrice) {
+        output.push(`maxPrice=${params.maxPrice}`);
+    }
+
+    if (params?.me) {
+        output.push(`me=${params.me}`);
+    }
+
+    if (params?.sortBy) {
+        output.push(`sortBy=${params.sortBy}`);
+    }
+
+    if (params?.limit) {
+        output.push(`limit=${params.limit}`);
+    }
+
+    if (params?.skip) {
+        output.push(`skip=${params.skip}`);
+    }
+
+    return output.length ? `?${output.join("&")}` : '';
+}
+
+export const getGarments: (params?: GarmentServiceParams) => Promise<Array<Garment>> = async (params) => {
     const token = getAuthToken();
 
     if (!token) throw new CustomException({ message: "Token is required" });
 
-    const response = await fetch(`${BASE_URL}/garment?`, {
+    const response = await fetch(`${BASE_URL}/garment${getUrlParams(params)}`, {
         headers: {
             Authorization: `Bearer ${token}`
         },
@@ -26,5 +78,5 @@ export const getGarments: () => Promise<Garment> = async () => {
 
     if (!response.ok) throw new CustomException(error);
 
-    return data.user;
+    return data.garments;
 }

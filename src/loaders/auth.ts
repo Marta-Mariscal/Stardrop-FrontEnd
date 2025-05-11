@@ -1,6 +1,4 @@
 import { redirect } from "react-router-dom";
-
-// Services
 import { getAuthToken } from "@/services/storage";
 
 export const checkAuthLoader = () => {

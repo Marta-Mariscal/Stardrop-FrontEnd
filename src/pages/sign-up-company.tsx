@@ -1,25 +1,9 @@
 import { useNavigate } from "react-router-dom";
-
-// Layouts
 import CredentialLayout from "@/layouts/credential";
-
-// Assets
 import logo from "../../assets/img/stardrop-logo.png";
-
-// Components
 import { title } from "@/components/primitives";
-
-// HeroUI
-import { Form } from "@heroui/form";
-import { Input, Textarea } from "@heroui/input";
-import { Button } from "@heroui/button";
-import { Link } from "@heroui/link";
-import { addToast } from "@heroui/toast";
-
-// Types
+import { Form, Input, Textarea, Button, Link, addToast } from "@heroui/react";
 import type { User } from "@/types/user";
-
-// Store
 import { useUser } from "@/store/user";
 
 export default function SignUpCompanyPage() {

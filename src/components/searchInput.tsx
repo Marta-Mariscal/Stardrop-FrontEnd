@@ -1,8 +1,7 @@
-// Hero UI
-import { Input } from "@heroui/input";
-
-// Icons
+import { useCallback } from "react";
+import { Input } from "@heroui/react";
 import { SearchIcon } from "@/components/icons";
+import debounce from "just-debounce-it";
 
 interface SearchInputProps {
     value?: string;
@@ -15,6 +14,16 @@ interface SearchInputProps {
 }
 
 export const SearchInput = ({ value, label, placeholder, fullWidth, onChange, onValueChange, onClear }: SearchInputProps) => {
+    const debouncedSearch = useCallback(
+        debounce((e) => {
+            onChange(e);
+        }, 300), []
+    );
+
+    const onChangeHandler = (e) => {
+        debouncedSearch(e);
+    };
+
     return (
         <Input
             isClearable
@@ -42,7 +51,7 @@ export const SearchInput = ({ value, label, placeholder, fullWidth, onChange, on
             placeholder={placeholder || "Search..."}
             startContent={<SearchIcon className="text-base text-default-400 pointer-events-none flex-shrink-0" />}
             type="search"
-            onChange={onChange}
+            onChange={onChangeHandler}
             onValueChange={onValueChange}
             onClear={onClear}
         />
