@@ -20,6 +20,7 @@ export const Navbar = () => {
 
     const onProfileHandler = () => {
         navigate("/profile", { replace: true });
+        console.log("Profile");
     };
 
     return (

@@ -10,6 +10,7 @@ import LoginPage from "@/pages/login";
 import SignUpPage from "@/pages/sign-up";
 import SignUpCompanyPage from "@/pages/sign-up-company";
 import NotFound from "./pages/not-found";
+import ProfilePage from "./pages/profile";
 
 export const router = createBrowserRouter([
     {
@@ -26,6 +27,11 @@ export const router = createBrowserRouter([
         path: "/sign-up-company",
         element: <SignUpCompanyPage />,
         loader: checkUnauthLoader
+    },
+    {
+        path: "/profile",
+        element: <ProfilePage />,
+        loader: checkAuthLoader
     },
     {
         path: "/",
