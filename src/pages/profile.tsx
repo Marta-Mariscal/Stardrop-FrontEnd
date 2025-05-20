@@ -1,7 +1,8 @@
 import { title } from "@/components/primitives";
 import DefaultLayout from "@/layouts/default";
+import { useNavigate } from "react-router-dom";
 import { useUser } from "../store/user";
-import { Button } from "@heroui/react";
+import { Button, Image } from "@heroui/react";
 import { useGarments } from "@/store/garments";
 import { CardGarment } from "@/components/card-garment";
 import { useEffect } from "react";
@@ -11,16 +12,26 @@ export default function ProfilePage() {
     const garments = useGarments((state) => state.garments);
     const loading = useGarments((state) => state.loading);
     const getGarments = useGarments((state) => state.getGarments);
+    const navigate = useNavigate();
+
 
     useEffect(() => {
         getGarments({ me: true });
     }, []);
 
+    const goPostGarmentHandler = () => {
+        navigate("/form-post-garment", { replace: true });
+    };
+
+    const goUpdateHandler = () => {
+        navigate("/form-profile-edit", { replace: true });
+    };
+
     return (
         <DefaultLayout>
             <section className="flex flex-col items-center gap-6 px-4 w-full">
                 <div className="w-full max-w-4xl bg-purple-100 dark:bg-purple-900 rounded-xl p-6 flex flex-col sm:flex-row items-center gap-4">
-                    <img
+                    <Image
                         src={"https://heroui.com/images/hero-card-complete.jpeg"}
                         alt="User avatar"
                         className="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover border-2 border-secondary"
@@ -43,10 +54,10 @@ export default function ProfilePage() {
                             </div>
                         </div>
                         <div className="flex flex-col gap-4">
-                            <Button color="secondary" className="text-sm sm:text-base">
+                            <Button color="secondary" className="text-sm sm:text-base" onPress={goUpdateHandler}>
                                 Edit Profile
                             </Button>
-                            <Button color="secondary" className="text-sm sm:text-base">
+                            <Button color="secondary" className="text-sm sm:text-base" onPress={goPostGarmentHandler}>
                                 Post Garment
                             </Button>
                         </div>

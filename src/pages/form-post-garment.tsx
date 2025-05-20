@@ -1,20 +1,21 @@
 import { useNavigate } from "react-router-dom";
-import CredentialLayout from "@/layouts/credential";
 import logo from "../../assets/img/stardrop-logo.png";
 import { title } from "@/components/primitives";
-import { Form, Input, Button, Link, addToast, Image } from "@heroui/react";
+import { Form, Input, Button, Image, addToast } from "@heroui/react";
 import type { User } from "@/types/user";
 import { useUser } from "@/store/user";
+import DefaultLayout from "@/layouts/default";
 
-export default function SignUpPage() {
-    const navigate = useNavigate();
+export default function FormPostGarmentPage() {
     const loading = useUser((state) => state.loading);
-    const signUp = useUser((state) => state.signUp);
+    const navigate = useNavigate();
+    const update = useUser((state) => state.update);
+    const user = useUser((state) => state.user);
 
     const onSuccessHandler = () => {
         addToast({
-            title: "Signed up successfully",
-            description: "Welcome to Stardrop! 🌟",
+            title: "Post garment successfully",
+            description: "Posted! 🌟",
             color: "success"
         });
 
@@ -23,7 +24,7 @@ export default function SignUpPage() {
 
     const onErrorHandler = (error: Error) => {
         addToast({
-            title: "SignUp failed",
+            title: "Post garment failed",
             description: error?.message || "Please try again later.",
             color: "danger"
         });
@@ -34,20 +35,15 @@ export default function SignUpPage() {
         let data = Object.fromEntries(new FormData(e.currentTarget)) as unknown as User;
         data.type = "customer";
 
-        signUp(data, { onSuccess: onSuccessHandler, onError: onErrorHandler });
-    };
-
-    const backLoginHandler = () => {
-        navigate("/login", { replace: true });
+        update(data, { onSuccess: onSuccessHandler, onError: onErrorHandler });
     };
 
     return (
-        <CredentialLayout>
+        <DefaultLayout>
             <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
                 <div className="inline-block max-w-lg text-center justify-center">
-                    <h1 className={title()}>Sign Up</h1>
+                    <h1 className={title()}>Post new garment!</h1>
                     <Image src={logo} alt="Logo" className="w-16 h-16 mx-auto mb-4" />
-                    <p className="text-default-500">Create a new account</p>
                     <div className="form-login-container">
                         <Form className="w-full max-w-xs flex flex-col gap-4" onSubmit={onSubmitHandler}>
                             <Input
@@ -58,9 +54,10 @@ export default function SignUpPage() {
                                 name="email"
                                 placeholder="example@stardrop.com"
                                 type="email"
+                                defaultValue={user.email}
                             />
-                            <Input isRequired errorMessage="Please enter a name" label="Name" labelPlacement="inside" name="name" placeholder="Stardrop" type="text" />
-                            <Input isRequired errorMessage="Please enter a address" label="Address" labelPlacement="inside" name="address" placeholder="C/Street 123" type="text" />
+                            <Input isRequired errorMessage="Please enter a name" label="Name" labelPlacement="inside" name="name" placeholder="Stardrop" type="text" defaultValue={user.name} />
+                            <Input isRequired errorMessage="Please enter a address" label="Address" labelPlacement="inside" name="address" placeholder="C/Street 123" type="text" defaultValue={user.address} />
                             <Input
                                 isRequired
                                 errorMessage="Please enter a valid phone number"
@@ -69,10 +66,11 @@ export default function SignUpPage() {
                                 name="phone"
                                 placeholder="999999999"
                                 type="number"
+                                defaultValue={user.phone}
                             />
                             <Input
                                 isRequired
-                                errorMessage="Please enter a password"
+                                errorMessage="Please enter a new password"
                                 label="Password"
                                 labelPlacement="inside"
                                 name="password"
@@ -87,6 +85,7 @@ export default function SignUpPage() {
                                 name="cardNumber"
                                 placeholder="1111 1111 1111 1111"
                                 type="text"
+                                defaultValue={user.cardNumber}
                             />
                             <Input
                                 isRequired
@@ -96,6 +95,7 @@ export default function SignUpPage() {
                                 name="cardExpirationDate"
                                 placeholder="MM/YY"
                                 type="text"
+                                defaultValue={user.cardExpirationDate}
                             />
                             <Input
                                 isRequired
@@ -105,28 +105,18 @@ export default function SignUpPage() {
                                 name="cardName"
                                 placeholder="STARDROP EXAMPLE"
                                 type="text"
+                                defaultValue={user.cardHolderName}
                             />
-                            <Input isRequired errorMessage="Please enter your card CVV" label="Card CVV" labelPlacement="inside" name="cardCVV" placeholder="111" type="number" />
+                            <Input isRequired errorMessage="Please enter your card CVV" label="Card CVV" labelPlacement="inside" name="cardCVV" placeholder="111" type="number" defaultValue={user.cardCVV}/>
 
                             {/* TODO: subir icon input type file  */}
-
-                            <div className="flex gap-2">
-                                <Button color="secondary" type="submit" isLoading={loading}>
-                                    Sign Up
-                                </Button>
-                                <Button color="secondary" type="reset" variant="flat" onPress={backLoginHandler}>
-                                    I already have an account
-                                </Button>
-                            </div>
-                            <div>
-                                <Link color="secondary" href="/sign-up-company">
-                                    Sign Up as Company
-                                </Link>
-                            </div>
+                            <Button color="secondary" type="submit" isLoading={loading}>
+                                Update
+                            </Button>
                         </Form>
                     </div>
                 </div>
             </section>
-        </CredentialLayout>
+        </DefaultLayout>
     );
 }

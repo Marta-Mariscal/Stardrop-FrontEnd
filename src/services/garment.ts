@@ -80,3 +80,24 @@ export const getGarments: (params?: GarmentServiceParams) => Promise<Array<Garme
 
     return data.garments;
 }
+
+export const postGarment: (garment: Garment) => Promise<Garment> = async (garment) => {
+    const token = getAuthToken();
+
+    if (!token) throw new CustomException({ message: "Token is required" });
+
+    const response = await fetch(`${BASE_URL}/garment`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify(garment)
+    });
+
+    const { data, error } = await response.json();
+
+    if (!response.ok) throw new CustomException(error);
+
+    return data.garment;
+}

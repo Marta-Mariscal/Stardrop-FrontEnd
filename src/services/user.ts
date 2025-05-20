@@ -82,3 +82,24 @@ export const logout: () => Promise<Data> = async () => {
 
     return data;
 };
+
+export const update: (user: User) => Promise<User> = async (user: User) => {
+    const token = getAuthToken();
+
+    if (!token) throw new CustomException({ message: "Token is required" });
+
+    const response = await fetch(`${BASE_URL}/users/me`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        method: 'PATCH',
+        body: JSON.stringify(user)
+    });
+
+    const { data, error } = await response.json();
+
+    if (!response.ok) throw new CustomException(error);
+
+    return data.user;
+};

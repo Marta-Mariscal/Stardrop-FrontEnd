@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import CredentialLayout from "@/layouts/credential";
 import logo from "../../assets/img/stardrop-logo.png";
 import { title } from "@/components/primitives";
-import { Form, Input, Textarea, Button, Link, addToast } from "@heroui/react";
+import { Form, Input, Textarea, Button, Link, addToast, Image } from "@heroui/react";
 import type { User } from "@/types/user";
 import { useUser } from "@/store/user";
 
@@ -46,7 +46,7 @@ export default function SignUpCompanyPage() {
             <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
                 <div className="inline-block max-w-lg text-center justify-center">
                     <h1 className={title()}>Sign Up as Company</h1>
-                    <img src={logo} alt="Logo" className="w-16 h-16 mx-auto mb-4" />
+                    <Image src={logo} alt="Logo" className="w-16 h-16 mx-auto mb-4" />
                     <p className="text-default-500">Create a new account for company</p>
                     <div className="form-login-container">
                         <Form className="w-full max-w-xs flex flex-col gap-4" onSubmit={onSubmitHandler}>

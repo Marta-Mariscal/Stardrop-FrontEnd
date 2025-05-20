@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Button, Link, Navbar as HeroUINavbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, link as linkStyles } from "@heroui/react";
+import { Button, Image, Link, Navbar as HeroUINavbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, link as linkStyles } from "@heroui/react";
 import clsx from "clsx";
 import { ThemeSwitch } from "@/components/theme-switch";
 import logo from "../../assets/img/stardrop-logo.png";
@@ -27,9 +27,9 @@ export const Navbar = () => {
         <HeroUINavbar maxWidth="xl" position="sticky">
             <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
                 <NavbarBrand className="gap-3 max-w-fit">
-                    <Link className="flex justify-start items-center gap-1" color="foreground" href="/">
-                        <img src={logo} alt="Logo" className="w-16 h-16 mx-auto mb-1" />
-                        <p className="text-secondary font-bold text-center">STARDROP</p>
+                    <Link className="flex justify-start items-center gap-3" color="foreground" href="/">
+                        <Image src={logo} alt="Logo" className="w-8 h-8 mx-auto mb-1" />
+                        <p className="text-secondary font-bold text-center text-2xl">STARDROP</p>
                     </Link>
                 </NavbarBrand>
                 <div className="hidden lg:flex gap-4 justify-start ml-2">
