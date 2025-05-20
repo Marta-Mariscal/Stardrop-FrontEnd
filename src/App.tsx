@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import { checkUnauthLoader, checkAuthLoader, getGarmentByIdLoader } from "./loaders/auth";
+import { checkUnauthLoader, checkAuthLoader } from "./loaders/auth";
+import { getGarmentByIdLoader } from "./loaders/garment";
 
 import IndexPage from "@/pages/index";
 import DocsPage from "@/pages/docs";
@@ -32,36 +33,6 @@ export const router = createBrowserRouter([
         loader: checkUnauthLoader
     },
     {
-        path: "/profile",
-        element: <ProfilePage />,
-        loader: checkAuthLoader
-    },
-    {
-        path: "/form-profile-edit",
-        element: <FormProfileEditPage />,
-        loader: checkAuthLoader
-    },
-    {
-        path: "/form-post-garment",
-        element: <FormPostGarmentPage />,
-        loader: checkAuthLoader
-    },
-    {
-        path: "/cart",
-        element: <CartPage />,
-        loader: checkAuthLoader
-    },
-    {
-        path: "/wishlist",
-        element: <WishlistPage />,
-        loader: checkAuthLoader
-    },
-    {
-        path: "/garment/:id",
-        element: <GarmentPage />,
-        loader: getGarmentByIdLoader
-      },
-    {
         path: "/",
         children: [
             { index: true, element: <IndexPage /> },
@@ -69,6 +40,36 @@ export const router = createBrowserRouter([
                 path: "/docs",
                 id: "docs",
                 element: <DocsPage />
+            },
+            {
+                path: "/profile",
+                id: "profile",
+                element: <ProfilePage />
+            },
+            {
+                path: "/form-profile-edit",
+                id: "form-profile-edit",
+                element: <FormProfileEditPage />
+            },
+            {
+                path: "/form-post-garment",
+                id: "form-post-garment",
+                element: <FormPostGarmentPage />
+            },
+            {
+                path: "/cart",
+                id: "cart",
+                element: <CartPage />
+            },
+            {
+                path: "/wishlist",
+                id: "wishlist",
+                element: <WishlistPage />
+            },
+            {
+                path: "/garment/:id",
+                element: <GarmentPage />,
+                loader: getGarmentByIdLoader
             }
         ],
         loader: checkAuthLoader

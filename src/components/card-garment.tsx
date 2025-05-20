@@ -10,7 +10,7 @@ export const CardGarment = ({ garment }: CardGarmentProps) => {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        navigate(`/garmentpage/${garment._id}`);
+        navigate(`/garment/${garment._id}`);
     };
     return (
         <div onClick={handleClick}>
