@@ -3,7 +3,7 @@ import { type User } from "./user";
 import { type Wishlist } from "./wishlist";
 
 export type Garment = {
-    _id: string;
+    _id?: string;
     name: string;
     description: string;
     size: string;
@@ -14,11 +14,11 @@ export type Garment = {
     image?: string;
     type: string;
     web?: string;
-    status: string;
+    status?: string;
     owner?: User; 
     createdAt?: Date;
     updatedAt?: Date;
-    __v: number;
+    __v?: number;
 
     orders?: Order[];
     wishlist?: Wishlist;

@@ -13,7 +13,7 @@ export default function ProfilePage() {
     const loading = useGarments((state) => state.loading);
     const getGarments = useGarments((state) => state.getGarments);
     const navigate = useNavigate();
-
+    const logout = useUser((state) => state.logout);
 
     useEffect(() => {
         getGarments({ me: true });
@@ -27,6 +27,12 @@ export default function ProfilePage() {
         navigate("/form-profile-edit", { replace: true });
     };
 
+    const handleLogout = () => {
+        logout({
+            onSuccess: () => navigate("/", { replace: true })
+        });
+    };
+
     return (
         <DefaultLayout>
             <section className="flex flex-col items-center gap-6 px-4 w-full">
@@ -36,31 +42,33 @@ export default function ProfilePage() {
                         alt="User avatar"
                         className="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover border-2 border-secondary"
                     />
-                    <div className="flex-1 flex flex-col sm:flex-row justify-between w-full items-center sm:items-start gap-4">
-                        <div className="text-center sm:text-left">
-                            <h1 className={`${title()} text-3xl sm:text-4xl mb-1`}>{user.name}</h1>
-                            <div className="text-sm text-default-600 dark:text-default-400 space-y-1">
-                                <div>📍 {user.address}</div>
-                                {user.web && (
-                                    <div>
-                                        <a href={user.web} target="_blank" rel="noopener noreferrer" className="underline text-secondary">
-                                            {user.web}
-                                        </a>
-                                    </div>
-                                )}
+                    <div className="flex-1 flex flex-col justify-center items-center sm:items-start w-full gap-6">
+                        <h1 className={`${title()} text-3xl sm:text-4xl`}>{user.name}</h1>
+                        <div className="text-center sm:text-left text-sm text-default-600 dark:text-default-400 space-y-1">
+                            <div>📍 {user.address}</div>
+                            {user.web && (
                                 <div>
-                                    📞 <strong>{user.email}</strong> <span className="text-default-500">//</span> <strong>{user.phone}</strong>
+                                    <a href={user.web} target="_blank" rel="noopener noreferrer" className="underline text-secondary">
+                                        {user.web}
+                                    </a>
                                 </div>
+                            )}
+                            <div>
+                                📞 <strong>{user.email}</strong> <span className="text-default-500">//</span> <strong>{user.phone}</strong>
                             </div>
                         </div>
-                        <div className="flex flex-col gap-4">
-                            <Button color="secondary" className="text-sm sm:text-base" onPress={goUpdateHandler}>
-                                Edit Profile
-                            </Button>
-                            <Button color="secondary" className="text-sm sm:text-base" onPress={goPostGarmentHandler}>
-                                Post Garment
-                            </Button>
-                        </div>
+                    </div>
+
+                    <div className="flex flex-col gap-4">
+                        <Button color="secondary" className="text-sm sm:text-base" onPress={goUpdateHandler}>
+                            Edit Profile
+                        </Button>
+                        <Button color="secondary" className="text-sm sm:text-base" onPress={goPostGarmentHandler}>
+                            Post Garment
+                        </Button>
+                        <Button color="danger" variant="light" className="text-sm sm:text-base" onPress={handleLogout}>
+                            Log out
+                        </Button>
                     </div>
                 </div>
 
@@ -82,7 +90,6 @@ export default function ProfilePage() {
                         ))}
                     </div>
                 )}
-
             </section>
         </DefaultLayout>
     );

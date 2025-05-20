@@ -3,7 +3,7 @@ import { Button, Image, Link, Navbar as HeroUINavbar, NavbarBrand, NavbarContent
 import clsx from "clsx";
 import { ThemeSwitch } from "@/components/theme-switch";
 import logo from "../../assets/img/stardrop-logo.png";
-import { CartIcon, HeartFilledIcon } from "@/components/icons";
+import { CartIcon, HeartFilledIcon, UserIcon } from "@/components/icons";
 import { siteConfig } from "@/config/site";
 import { SearchInput } from "./searchInput";
 
@@ -74,7 +74,7 @@ export const Navbar = () => {
                         as={Link}
                         className="text-sm font-normal text-default-600 bg-default-100"
                         onPress={onProfileHandler}
-                        startContent={<HeartFilledIcon className="text-secondary" />}
+                        startContent={<UserIcon className="text-secondary" />}
                         variant="flat"
                     >
                         Profile

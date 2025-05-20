@@ -73,6 +73,22 @@ export const HeartFilledIcon = ({
   </svg>
 );
 
+//USER ICON
+export const UserIcon = ({ size = 29, width, height, ...props }: any) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    height={size || height}
+    width={size || width}
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    {...props}
+  >
+    <path d="M12 12c2.67 0 8 1.34 8 4v2H4v-2c0-2.66 5.33-4 8-4Zm0-2c-1.66 0-3-1.34-3-3s1.34-3 
+    3-3 3 1.34 3 3-1.34 3-3 3Z" />
+  </svg>
+);
+
+
 // CART ICON
 export const CartIcon: React.FC<IconSvgProps> = ({
   size = 24,
