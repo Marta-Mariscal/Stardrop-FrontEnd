@@ -69,7 +69,7 @@ export default function IndexPage() {
                             </div>
 
                             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-4">
-                                {garments.map((garment) => (
+                                {garments.filter(g => g.type == "new").map((garment) => (
                                     <CardGarment key={garment._id} garment={garment} />
                                 ))}
                             </div>

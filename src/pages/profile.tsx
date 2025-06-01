@@ -29,7 +29,7 @@ export default function ProfilePage() {
 
     const handleLogout = () => {
         logout({
-            onSuccess: () => navigate("/", { replace: true })
+            onSuccess: () => navigate("/login", { replace: true })
         });
     };
 
@@ -54,7 +54,7 @@ export default function ProfilePage() {
                                 </div>
                             )}
                             <div>
-                                📞 <strong>{user.email}</strong> <span className="text-default-500">//</span> <strong>{user.phone}</strong>
+                                📞 <strong>{user.email}</strong> <span className="text-default-500">{'//'}</span> <strong>{user.phone}</strong>
                             </div>
                         </div>
                     </div>
@@ -63,9 +63,11 @@ export default function ProfilePage() {
                         <Button color="secondary" className="text-sm sm:text-base" onPress={goUpdateHandler}>
                             Edit Profile
                         </Button>
-                        <Button color="secondary" className="text-sm sm:text-base" onPress={goPostGarmentHandler}>
-                            Post Garment
-                        </Button>
+                        {user.type == "company" &&
+                            <Button color="secondary" className="text-sm sm:text-base" onPress={goPostGarmentHandler}>
+                                Post Garment
+                            </Button>
+                        }
                         <Button color="danger" variant="light" className="text-sm sm:text-base" onPress={handleLogout}>
                             Log out
                         </Button>

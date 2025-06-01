@@ -4,7 +4,6 @@ import { checkUnauthLoader, checkAuthLoader } from "./loaders/auth";
 import { getGarmentByIdLoader } from "./loaders/garment";
 
 import IndexPage from "@/pages/index";
-import DocsPage from "@/pages/docs";
 import LoginPage from "@/pages/login";
 import SignUpPage from "@/pages/sign-up";
 import SignUpCompanyPage from "@/pages/sign-up-company";
@@ -36,11 +35,6 @@ export const router = createBrowserRouter([
         path: "/",
         children: [
             { index: true, element: <IndexPage /> },
-            {
-                path: "/docs",
-                id: "docs",
-                element: <DocsPage />
-            },
             {
                 path: "/profile",
                 id: "profile",

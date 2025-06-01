@@ -1,27 +1,35 @@
 import { useState } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import DefaultLayout from "@/layouts/default";
+import { useNavigate } from "react-router-dom";
 import { Garment } from "@/types/garment";
 import { Image, Button, Chip, Divider, addToast } from "@heroui/react";
 import { HeartFilledIcon } from "@/components/icons";
-
-const sizeOptions: Record<string, string[]> = {
-    shirt: ["XS", "S", "M", "L", "XL"],
-    pant: ["30", "32", "34", "36", "38", "40"],
-    dress: ["XS", "S", "M", "L"],
-    outerwear: ["S", "M", "L", "XL", "XXL"],
-    accessory: ["One Size"],
-    other: ["S", "M", "L"],
-    footwear: ["36", "37", "38", "39", "40", "41", "42"]
-};
+import { sizeOptions } from "@/types/garment-sizes";
+import { useGarments } from "@/store/garments";
+import { useEffect } from "react";
+import { CardGarment } from "@/components/card-garment";
+import { useUser } from "@/store/user";
 
 export default function GarmentPage() {
     const garment = useLoaderData() as Garment;
+    const garments = useGarments((state) => state.garments);
+    const getGarments = useGarments((state) => state.getGarments);
+    const user = useUser((state) => state.user);
+     const navigate = useNavigate();
 
     const [selectedSize, setSelectedSize] = useState("");
     const [error, setError] = useState("");
 
     const sizes = sizeOptions[garment.category];
+
+    useEffect(() => {
+        getGarments({ garmentBase: garment._id });
+    }, []);
+
+    const goPostGarmentHandler = () => {
+        navigate("/form-post-garment", { replace: true });
+    };
 
     const handleAddToCart = () => {
         if (!selectedSize) {
@@ -33,19 +41,19 @@ export default function GarmentPage() {
             });
             return;
         }
-        setError("");
 
+        
+
+        setError("");
         const cartJSON = localStorage.getItem("cart");
         const cart: (Garment & { selectedSize: string })[] = cartJSON ? JSON.parse(cartJSON) : [];
-
         const garmentToAdd = { ...garment, selectedSize };
         cart.push(garmentToAdd);
-
         localStorage.setItem("cart", JSON.stringify(cart));
 
         addToast({
             title: "Added to cart",
-            description: `You have ${garment.name} (size ${selectedSize}) to cart.`,
+            description: `You added ${garment.name} (size ${selectedSize}) to the cart.`,
             color: "success"
         });
 
@@ -75,23 +83,37 @@ export default function GarmentPage() {
                             ))}
                         </div>
 
-                        <h2 className="text-2xl font-semibold text-secondary mb-4">{garment.price.toFixed(2)} €</h2>
+                        { garment.type == "new" ?
+                            (<h2 className="text-2xl font-semibold text-secondary mb-4">{garment.price.toFixed(2)} €</h2>)
+                            :
+                            (<h2 className="text-2xl font-semibold text-danger mb-4">{garment.price.toFixed(2)} €</h2>)
+                        }
 
                         {sizes.length > 0 && (
                             <div className="mb-4">
                                 <p className="mb-2 font-medium text-sm text-gray-700">Select a size:</p>
                                 <div className="flex flex-wrap gap-2 mb-1">
-                                    {sizes.map((size) => (
-                                        <button
-                                            key={size}
-                                            onClick={() => setSelectedSize(size)}
-                                            className={`px-4 py-2 rounded-full border text-sm font-medium transition ${
-                                                selectedSize === size ? "bg-secondary text-white border-secondary" : "bg-white text-gray-700 border-gray-300 hover:border-secondary"
-                                            }`}
-                                        >
-                                            {size}
-                                        </button>
-                                    ))}
+                                    {
+                                        garment.size ? (
+                                            <button
+                                                key={garment.size}
+                                                onClick={() => setSelectedSize(garment.size)}
+                                                className={`px-4 py-2 rounded-full border text-sm font-medium transition ${selectedSize === garment.size ? "bg-secondary text-white border-secondary" : "bg-white text-gray-700 border-gray-300 hover:border-secondary"
+                                                    }`}
+                                            >
+                                                {garment.size}
+                                            </button>
+                                        )
+                                            : (sizes.map((size) => (
+                                                <button
+                                                    key={size}
+                                                    onClick={() => setSelectedSize(size)}
+                                                    className={`px-4 py-2 rounded-full border text-sm font-medium transition ${selectedSize === size ? "bg-secondary text-white border-secondary" : "bg-white text-gray-700 border-gray-300 hover:border-secondary"
+                                                        }`}
+                                                >
+                                                    {size}
+                                                </button>
+                                            )))}
                                 </div>
                                 {error && <p className="text-red-600 text-xs mt-1">{error}</p>}
                             </div>
@@ -121,6 +143,23 @@ export default function GarmentPage() {
                     )}
                 </div>
             </div>
+
+            {garment.type == "new" && 
+                (<div className="max-w-6xl mx-auto px-6 mt-16">
+                <h2 className="text-2xl font-bold mb-6">Second Hand:</h2>
+                {user.type == "customer" &&
+                            <Button color="secondary" className="text-sm sm:text-base p-5 mb-6" onPress={goPostGarmentHandler}>
+                                Post Garment
+                            </Button>
+                        }
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {garments.map((g) => (
+                        <CardGarment key={g._id} garment={g} />
+                    ))}
+                </div>
+            </div>)
+            }
+            
         </DefaultLayout>
     );
 }

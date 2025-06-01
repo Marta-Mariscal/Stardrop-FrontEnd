@@ -8,6 +8,7 @@ export type GarmentServiceParams = {
     minPrice?: number,
     maxPrice?: number,
     me?: boolean,
+    garmentBase?: string,
     sortBy?: string,
     limit?: number,
     skip?: number

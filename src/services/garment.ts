@@ -3,7 +3,6 @@ import { getAuthToken } from "./storage";
 import { CustomException } from "@/exceptions/customException";
 import { GarmentServiceParams } from "@/types/garment-service-params";
 
-
 const BASE_URL = import.meta.env.BACKEND_BASE_URL || "http://localhost:3000";
 
 const getUrlParams = (params?: GarmentServiceParams) => {
@@ -25,7 +24,7 @@ const getUrlParams = (params?: GarmentServiceParams) => {
 
     if (params?.types) {
         output.push(`types=${params.types.join(",")}`);
-    } 
+    }
 
     if (params?.colors) {
         output.push(`colors=${params.colors.join(",")}`);
@@ -45,6 +44,10 @@ const getUrlParams = (params?: GarmentServiceParams) => {
 
     if (params?.me) {
         output.push(`me=${params.me}`);
+    }
+
+    if (params?.garmentBase) {
+        output.push(`garmentBase=${params.garmentBase}`);
     }
 
     if (params?.sortBy) {

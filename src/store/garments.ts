@@ -19,6 +19,7 @@ export const useGarments = create<GarmentsStore>((set, get) => ({
     error: null,
     getGarments: (filters, callback) => {
         set({ loading: true });
+        console.log("Fetching garments with filters:", filters);
         getGarments(filters)
             .then((response: Array<Garment>) => {
                 set({ garments: response });

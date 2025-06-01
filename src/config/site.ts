@@ -5,10 +5,6 @@ export const siteConfig = {
   description: "Every garment, a story. Every purchase, a choice.",
   navItems: [
     {
-      label: "Docs",
-      href: "/docs",
-    },
-    {
       label: "Login",
       href: "/login",
     },
@@ -19,43 +15,20 @@ export const siteConfig = {
   ],
   navMenuItems: [
     {
+      label: "Home",
+      href: "/",
+    },
+    {
       label: "Profile",
       href: "/profile",
     },
     {
-      label: "Dashboard",
-      href: "/dashboard",
+      label: "Cart",
+      href: "/cart",
     },
     {
-      label: "Projects",
-      href: "/projects",
-    },
-    {
-      label: "Team",
-      href: "/team",
-    },
-    {
-      label: "Calendar",
-      href: "/calendar",
-    },
-    {
-      label: "Settings",
-      href: "/settings",
-    },
-    {
-      label: "Help & Feedback",
-      href: "/help-feedback",
-    },
-    {
-      label: "Logout",
-      href: "/logout",
-    },
-  ],
-  links: {
-    github: "https://github.com/frontio-ai/heroui",
-    twitter: "https://twitter.com/hero_ui",
-    docs: "https://heroui.com",
-    discord: "https://discord.gg/9b6yyZKmH4",
-    sponsor: "https://patreon.com/jrgarciadev",
-  },
+      label: "Wishlist",
+      href: "/wishlist",
+    }
+  ]
 };

@@ -72,8 +72,7 @@ export const logout: () => Promise<Data> = async () => {
         headers: {
             Authorization: `Bearer ${token}`
         },
-        method: 'POST',
-        credentials: 'include'
+        method: 'POST'
     });
 
     const { data, error } = await response.json();

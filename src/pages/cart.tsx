@@ -5,6 +5,7 @@ import { CardGarment } from "@/components/card-garment";
 import { Garment } from "@/types/garment";
 import { User } from "@/types/user";
 import { useUser } from "@/store/user";
+import confetti from 'canvas-confetti'
 
 type GarmentWithQty = { garment: Garment; quantity: number };
 
@@ -64,6 +65,16 @@ export default function CartPage() {
         const updated = [...cartItems];
         updated.splice(index, 1);
         updateCart(updated);
+    };
+
+    const makeOrder = () => {
+        confetti({
+            particleCount: 250,
+            startVelocity: 30,
+            spread: 360,
+            origin: { y: 0.3 }
+            
+        });
     };
 
     useEffect(() => {
@@ -161,7 +172,7 @@ export default function CartPage() {
                             <Button variant="light" color="secondary" onPress={() => setIsDrawerOpen(false)}>
                                 Cancel
                             </Button>
-                            <Button color="secondary" onPress={() => alert("Compra confirmada!")}>
+                            <Button color="secondary" onPress={makeOrder}>
                                 Confirm purchase
                             </Button>
                         </DrawerFooter>
