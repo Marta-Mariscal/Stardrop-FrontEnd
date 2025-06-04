@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/img/stardrop-logo.png";
-import { Form, Input, Button, Image, addToast, Textarea, Link, Select, SelectItem } from "@heroui/react";
+import { Form, Input, Button, Image, addToast, Textarea, Select, SelectItem } from "@heroui/react";
 import type { User } from "@/types/user";
 import { useUser } from "@/store/user";
 import DefaultLayout from "@/layouts/default";
@@ -36,20 +36,24 @@ export default function FormPostGarmentPage() {
         });
     };
 
+    const goPostGarmentHandler = () => {
+        navigate("/form-post-garment", { replace: true });
+    };
+
     const onSubmitHandler = (e) => {
-        if(user?.type == "company") {
+        if (user?.type == "company") {
             e.preventDefault();
             let data = Object.fromEntries(new FormData(e.currentTarget)) as unknown as User;
             data.type = "company";
             update(data, { onSuccess: onSuccessHandler, onError: onErrorHandler });
-        }else{
+        } else {
             // TODO: añadir del garment base el genero, colores...
             e.preventDefault();
             let data = Object.fromEntries(new FormData(e.currentTarget)) as unknown as User;
             data.type = "company";
             update(data, { onSuccess: onSuccessHandler, onError: onErrorHandler });
         }
-        
+
     };
 
     return (
@@ -111,11 +115,10 @@ export default function FormPostGarmentPage() {
                             </Select>
                         }
 
-
                         {/* TODO: subir icon input type file */}
 
                         <div className="flex justify-between w-full pt-2">
-                            <Button color="secondary" type="submit" isLoading={loading}>
+                            <Button color="secondary" type="submit" isLoading={loading} onPress={goPostGarmentHandler}>
                                 Post Garment
                             </Button>
                             <Button color="danger" variant="flat" type="button" onPress={() => navigate("/profile", { replace: true })}>

@@ -42,8 +42,6 @@ export default function GarmentPage() {
             return;
         }
 
-        
-
         setError("");
         const cartJSON = localStorage.getItem("cart");
         const cart: (Garment & { selectedSize: string })[] = cartJSON ? JSON.parse(cartJSON) : [];

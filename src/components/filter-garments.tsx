@@ -116,7 +116,7 @@ export const FilterGarments = () => {
 
     return (
         <>
-            <Button onPress={onOpen}>Filters</Button>
+            <Button variant="flat" color="secondary" onPress={onOpen}>Filters</Button>
             <Drawer isDismissable={false} isKeyboardDismissDisabled={true} isOpen={isOpen} onOpenChange={onOpenChange}>
                 <DrawerContent>
                     {
