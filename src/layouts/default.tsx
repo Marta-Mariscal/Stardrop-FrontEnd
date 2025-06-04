@@ -11,13 +11,13 @@ export default function DefaultLayout({ children }: { children: React.ReactNode 
                         © {new Date().getFullYear()} <span className="font-bold text-purple-600">Stardrop</span>. All rights reserved.
                     </span>
                     <div className="flex space-x-4 mt-4 sm:mt-0">
-                        <a href="#" className="text-sm text-gray-600 hover:text-purple-600 transition">
+                        <a href="/doc" className="text-sm text-gray-600 hover:text-purple-600 transition">
                             Privacy Policy
                         </a>
-                        <a href="#" className="text-sm text-gray-600 hover:text-purple-600 transition">
+                        <a href="/doc" className="text-sm text-gray-600 hover:text-purple-600 transition">
                             Terms of Service
                         </a>
-                        <a href="#" className="text-sm text-gray-600 hover:text-purple-600 transition">
+                        <a href="https://www.linkedin.com/in/marta-mariscal-velazquez/" className="text-sm text-gray-600 hover:text-purple-600 transition">
                             Contact
                         </a>
                     </div>
