@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import DefaultLayout from "@/layouts/default";
-import { Drawer, DrawerContent, DrawerHeader, DrawerBody, DrawerFooter, Button, Divider } from "@heroui/react";
+import { Drawer, DrawerContent, DrawerHeader, DrawerBody, DrawerFooter, Button, Divider, Spinner } from "@heroui/react";
 import { CardGarment } from "@/components/card-garment";
 import { Garment } from "@/types/garment";
 import { User } from "@/types/user";
@@ -14,6 +14,7 @@ export default function CartPage() {
     const [cartItems, setCartItems] = useState<GarmentWithQty[]>([]);
     const [totalPrice, setTotalPrice] = useState(0);
     const user: User = useUser((state) => state.user);
+    const loading = useUser((state) => state.loading);
 
     const groupCart = (items: Garment[]): GarmentWithQty[] => {
         const grouped: { [key: string]: GarmentWithQty } = {};
@@ -80,6 +81,16 @@ export default function CartPage() {
     useEffect(() => {
         loadCartFromStorage();
     }, []);
+
+    if (loading) {
+        return (
+            <DefaultLayout>
+                <div className="flex justify-center pt-5">
+                    <Spinner color="secondary" label="Loading..." labelColor="secondary" />
+                </div>
+            </DefaultLayout>
+        );
+    }
 
     return (
         <DefaultLayout>
@@ -149,7 +160,7 @@ export default function CartPage() {
                                 <h3 className="text-secondary text-lg font-semibold flex items-center gap-1">Card details</h3>
                                 <div className="text-sm text-gray-700 space-y-1">
                                     <p>
-                                        <span className="font-semibold">Number:</span> {user?.cardNumber ? `**** **** **** ${user.cardNumber.slice(-4)}` : "**** **** **** 0000"}
+                                        <span className="font-semibold">Number:</span> {user?.cardNumber ? `**** **** **** ${user?.cardNumber.slice(-4)}` : "**** **** **** 0000"}
                                     </p>
                                     <p>
                                         <span className="font-semibold">Expiration:</span> {user?.cardExpirationDate || "MM/YY"}

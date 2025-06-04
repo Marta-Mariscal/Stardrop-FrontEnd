@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/img/stardrop-logo.png";
-import { Form, Input, Button, Image, addToast, Textarea, Select, SelectItem } from "@heroui/react";
+import { Form, Input, Button, Image, addToast, Textarea, Select, SelectItem, Spinner } from "@heroui/react";
 import type { User } from "@/types/user";
 import { useUser } from "@/store/user";
 import DefaultLayout from "@/layouts/default";
@@ -56,12 +56,22 @@ export default function FormPostGarmentPage() {
 
     };
 
+    if (loading) {
+        return (
+            <DefaultLayout>
+                <div className="flex justify-center pt-5">
+                    <Spinner color="secondary" label="Loading..." labelColor="secondary" />
+                </div>
+            </DefaultLayout>
+        );
+    }
+
     return (
         <DefaultLayout>
             <div className="flex justify-center pt-5">
                 <div className="w-full max-w-md bg-purple-300 rounded-2xl shadow-lg p-8 flex flex-col items-center">
                     <div className="flex items-center gap-4 mb-4">
-                        <Image src={logo} alt="Logo" className="w-14 h-14" />
+                        <Image src={logo} alt="Logo" className="w-14 h-14" radius="none"/>
                         <div>
                             <h1 className="text-3xl font-semibold text-gray-800">Post Garment</h1>
                             <p className="text-gray-500 text-sm">Create a new garment and post it</p>

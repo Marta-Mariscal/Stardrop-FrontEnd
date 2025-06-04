@@ -5,12 +5,7 @@ export const siteConfig = {
   description: "Every garment, a story. Every purchase, a choice.",
   navItems: [
     {
-      label: "Login",
-      href: "/login",
-    },
-    {
-      label: "Sign Up",
-      href: "/sign-up",
+      
     },
   ],
   navMenuItems: [

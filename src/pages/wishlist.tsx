@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import DefaultLayout from "@/layouts/default";
-import { Button, Divider } from "@heroui/react";
+import { Button, Divider, Spinner } from "@heroui/react";
 import { CardGarment } from "@/components/card-garment";
 import { type Garment } from "@/types/garment";
 import { type Wishlist } from "@/types/wishlist";
@@ -9,6 +9,7 @@ import { useUser } from "@/store/user";
 export default function WishlistPage() {
   const user = useUser((state) => state.user);
   const updateUser = useUser((state) => state.update);
+  const loading = useUser((state) => state.loading);
 
   const [wishlistItems, setWishlistItems] = useState<Garment[]>([]);
 
@@ -46,6 +47,16 @@ export default function WishlistPage() {
       }
     );
   };
+
+  if (loading) {
+        return (
+            <DefaultLayout>
+                <div className="flex justify-center pt-5">
+                    <Spinner color="secondary" label="Loading..." labelColor="secondary" />
+                </div>
+            </DefaultLayout>
+        );
+    }
 
   return (
     <DefaultLayout>

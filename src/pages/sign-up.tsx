@@ -46,7 +46,7 @@ export default function SignUpPage() {
             <div className="flex justify-center pt-5">
                 <div className="w-full max-w-md bg-purple-300 rounded-2xl shadow-lg p-8 flex flex-col items-center">
                     <div className="flex items-center gap-4 mb-4">
-                        <Image src={logo} alt="Logo" className="w-14 h-14" />
+                        <Image src={logo} alt="Logo" className="w-14 h-14" radius="none"/>
                         <div>
                             <h1 className="text-3xl font-semibold text-gray-800">Sign Up as Company</h1>
                             <p className="text-gray-500 text-sm">Create a new account for company</p>

@@ -104,3 +104,24 @@ export const postGarment: (garment: Garment) => Promise<Garment> = async (garmen
 
     return data.garment;
 }
+
+export const getNewGarments: (params?: GarmentServiceParams) => Promise<Array<Garment>> = async (params) => {
+    const token = getAuthToken();
+
+    params.types = ["new"];
+
+    if (!token) throw new CustomException({ message: "Token is required" });
+
+    const response = await fetch(`${BASE_URL}/garment${getUrlParams(params)}`, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        },
+        method: 'GET'
+    });
+
+    const { data, error } = await response.json();
+
+    if (!response.ok) throw new CustomException(error);
+
+    return data.garments;
+}

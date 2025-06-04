@@ -12,6 +12,8 @@ interface GarmentsStore {
     garmentSelectedSecondHand?: Garment | null;
     getGarments: (filters?: GarmentServiceParams, callback?: { onSuccess?: (response: Array<Garment>) => void; onError?: (error: Error) => void; onFinally?: () => void }) => void;
     postGarment: (garment: Garment, callback?: { onSuccess?: (response: Garment) => void; onError?: (error: Error) => void; onFinally?: () => void }) => void;
+    getNewGarments: (filters?: GarmentServiceParams, callback?: { onSuccess?: (response: Array<Garment>) => void; onError?: (error: Error) => void; onFinally?: () => void }) => void;
+
 }
 
 export const useGarments = create<GarmentsStore>((set, get) => ({
@@ -43,6 +45,24 @@ export const useGarments = create<GarmentsStore>((set, get) => ({
             .then((response: Garment) => {
                 set({ garments: [...get().garments, response] });
                 if (callback?.onSuccess) callback.onSuccess(response);
+            })
+            .catch((error) => {
+                if (error instanceof CustomException) set({ error: error.detail });
+                else set({ error: { message: error.message } });
+                if (callback?.onError) callback.onError(get().error);
+            })
+            .finally(() => {
+                set({ loading: false });
+                if (callback?.onFinally) callback.onFinally();
+            });
+    },
+    getNewGarments: (filters, callback) => {
+        set({ loading: true });
+        console.log("Fetching garments with filters:", filters);
+        getGarments(filters)
+            .then((response: Array<Garment>) => {
+                set({ garments: response });
+                if (callback?.onSuccess) callback.onSuccess(get().garments);
             })
             .catch((error) => {
                 if (error instanceof CustomException) set({ error: error.detail });

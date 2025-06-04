@@ -1,8 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import CredentialLayout from "@/layouts/credential";
 import logo from "../../assets/img/stardrop-logo.png";
-import { title } from "@/components/primitives";
-import { Form, Input, Button, addToast, Image } from "@heroui/react";
+import { Form, Input, Button, addToast, Image, Spinner } from "@heroui/react";
 import type { Credential } from "@/types/credential";
 import { useUser } from "@/store/user";
 
@@ -46,7 +45,7 @@ export default function LoginPage() {
 
             <div className="w-full max-w-md bg-purple-300 rounded-2xl shadow-lg p-8 flex flex-col items-center">
                 <div className="flex items-center gap-4 mb-4">
-                    <Image src={logo} alt="Logo" className="w-14 h-14" />
+                    <Image src={logo} alt="Logo" className="w-14 h-14" radius="none"/>
                     <div>
                         <h1 className="text-3xl font-semibold text-gray-800">Login</h1>
                         <p className="text-gray-500 text-sm">Login to your account</p>

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import DefaultLayout from "@/layouts/default";
-import { Spinner, addToast } from "@heroui/react";
+import { Spinner, addToast, Pagination } from "@heroui/react";
 import { useUser } from "@/store/user";
 import { useGarments } from "@/store/garments";
 import { SearchInput } from "@/components/searchInput";
@@ -11,7 +11,7 @@ export default function IndexPage() {
     const user = useUser((state) => state.user);
     const garments = useGarments((state) => state.garments);
     const loading = useGarments((state) => state.loading);
-    const getGarments = useGarments((state) => state.getGarments);
+    const getGarments = useGarments((state) => state.getNewGarments);
 
     const onErrorHandler = (error: Error) => {
         addToast({
@@ -72,6 +72,9 @@ export default function IndexPage() {
                                 {garments.filter(g => g.type == "new").map((garment) => (
                                     <CardGarment key={garment._id} garment={garment} />
                                 ))}
+                            </div>
+                            <div className="flex justify-center mt-6 gap-2">
+                                <Pagination showControls initialPage={1} color="secondary" variant="bordered" total={10} />
                             </div>
                         </>
                     )}
