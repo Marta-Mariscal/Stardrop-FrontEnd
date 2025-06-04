@@ -17,6 +17,7 @@ export type User = {
     cardHolderName?: string;
     cardCVV?: string;
     icon?: string;
+    iconBlob?: any;
     createdAt?: Date;
     updatedAt?: Date;
 

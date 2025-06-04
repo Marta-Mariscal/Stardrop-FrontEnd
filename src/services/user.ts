@@ -5,7 +5,6 @@ import { type Data } from "@/types/data";
 import { getAuthToken } from "./storage";
 import { CustomException } from "@/exceptions/customException";
 
-
 const BASE_URL = import.meta.env.BACKEND_BASE_URL || "http://localhost:3000";
 
 export const whoami: () => Promise<User> = async () => {
@@ -17,7 +16,7 @@ export const whoami: () => Promise<User> = async () => {
         headers: {
             Authorization: `Bearer ${token}`
         },
-        method: 'GET'
+        method: "GET"
     });
 
     const { data, error } = await response.json();
@@ -25,16 +24,16 @@ export const whoami: () => Promise<User> = async () => {
     if (!response.ok) throw new CustomException(error);
 
     return data.user;
-}
+};
 
 export const login: (credential: Credential) => Promise<UserToken> = async (credential: Credential) => {
     if (!credential || !credential.email || !credential.password) throw new CustomException({ message: "Email and password are required" });
 
     const response = await fetch(`${BASE_URL}/users/login`, {
         headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json"
         },
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify(credential)
     });
 
@@ -50,9 +49,9 @@ export const signUp: (user: User) => Promise<UserToken> = async (user: User) => 
 
     const response = await fetch(`${BASE_URL}/users/signup`, {
         headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json"
         },
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify(user)
     });
 
@@ -72,7 +71,7 @@ export const logout: () => Promise<Data> = async () => {
         headers: {
             Authorization: `Bearer ${token}`
         },
-        method: 'POST'
+        method: "POST"
     });
 
     const { data, error } = await response.json();
@@ -87,13 +86,19 @@ export const update: (user: User) => Promise<User> = async (user: User) => {
 
     if (!token) throw new CustomException({ message: "Token is required" });
 
+    const userData = new FormData();
+    if (user.iconBlob) {
+        userData.append("image", user.iconBlob);
+        delete user.iconBlob;
+    }
+    userData.append("user", JSON.stringify(user));
+
     const response = await fetch(`${BASE_URL}/users/me`, {
         headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json'
+            Authorization: `Bearer ${token}`
         },
-        method: 'PATCH',
-        body: JSON.stringify(user)
+        method: "PATCH",
+        body: userData
     });
 
     const { data, error } = await response.json();

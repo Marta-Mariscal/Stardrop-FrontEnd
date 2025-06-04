@@ -1,24 +1,25 @@
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/img/stardrop-logo.png";
-import { Form, Input, Button, Image, addToast } from "@heroui/react";
+import { Form, Input, Button, Image, addToast, Spinner } from "@heroui/react";
 import type { User } from "@/types/user";
 import { useUser } from "@/store/user";
 import DefaultLayout from "@/layouts/default";
+import { ImageInput } from "@/components/image-input";
 
 export default function FormProfileEditPage() {
-    const loading = useUser((state) => state.loading);
     const navigate = useNavigate();
+    const loading = useUser((state) => state.loading);
     const update = useUser((state) => state.update);
     const user = useUser((state) => state.user);
 
     const onSuccessHandler = () => {
         addToast({
-            title: "Update user successfully",
-            description: "Welcome to Stardrop! 🌟",
+            title: "User updated",
+            description: "Your user has been successfully updated! 🎉",
             color: "success"
         });
 
-        navigate("/", { replace: true });
+        navigate("/profile", { replace: true });
     };
 
     const onErrorHandler = (error: Error) => {
@@ -32,17 +33,34 @@ export default function FormProfileEditPage() {
     const onSubmitHandler = (e) => {
         e.preventDefault();
         let data = Object.fromEntries(new FormData(e.currentTarget)) as unknown as User;
-        data.type = "customer";
+
+        Object.keys(data).forEach((key) => {
+            if (data[key] === user[key] || (key === "password" && !data[key]) || (key === "iconBlob" && (!data[key].name || data[key].name.includes(user.icon)))) {
+                delete data[key];
+            } else if (data[key] === "" || data[key] === null) {
+                data[key] = user[key];
+            }
+        });
 
         update(data, { onSuccess: onSuccessHandler, onError: onErrorHandler });
     };
+
+    if (loading) {
+        return (
+            <DefaultLayout>
+                <div className="flex justify-center pt-5">
+                    <Spinner color="secondary" label="Loading..." labelColor="secondary" />
+                </div>
+            </DefaultLayout>
+        );
+    }
 
     return (
         <DefaultLayout>
             <div className="flex justify-center pt-5">
                 <div className="w-full max-w-md bg-purple-300 rounded-2xl shadow-lg p-8 flex flex-col items-center">
                     <div className="flex items-center gap-4 mb-4">
-                        <Image src={logo} alt="Logo" className="w-14 h-14" />
+                        <Image src={logo} alt="Logo" className="w-14 h-14" radius="none"/>
                         <div>
                             <h1 className="text-3xl font-semibold text-gray-800">Edit your account</h1>
                             {/* No agregué subtítulo para que sea igual al ejemplo */}
@@ -50,6 +68,7 @@ export default function FormProfileEditPage() {
                     </div>
 
                     <Form className="w-full flex flex-col gap-4" onSubmit={onSubmitHandler}>
+                        <ImageInput image={user?.icon} label="Icon" name="iconBlob" onChange={() => {}}/>
                         <Input
                             isRequired
                             errorMessage="Please enter a valid email"
@@ -58,7 +77,7 @@ export default function FormProfileEditPage() {
                             name="email"
                             placeholder="example@stardrop.com"
                             type="email"
-                            defaultValue={user.email}
+                            defaultValue={user?.email}
                         />
                         <Input
                             isRequired
@@ -68,7 +87,7 @@ export default function FormProfileEditPage() {
                             name="name"
                             placeholder="Stardrop"
                             type="text"
-                            defaultValue={user.name}
+                            defaultValue={user?.name}
                         />
                         <Input
                             isRequired
@@ -78,7 +97,7 @@ export default function FormProfileEditPage() {
                             name="address"
                             placeholder="C/Street 123"
                             type="text"
-                            defaultValue={user.address}
+                            defaultValue={user?.address}
                         />
                         <Input
                             isRequired
@@ -88,15 +107,14 @@ export default function FormProfileEditPage() {
                             name="phone"
                             placeholder="999999999"
                             type="number"
-                            defaultValue={user.phone}
+                            defaultValue={user?.phone}
                         />
                         <Input
-                            isRequired
                             errorMessage="Please enter a new password"
                             label="Password"
                             labelPlacement="inside"
                             name="password"
-                            placeholder="secretpassword"
+                            placeholder="Reset your password"
                             type="password"
                         />
                         <Input
@@ -107,7 +125,7 @@ export default function FormProfileEditPage() {
                             name="cardNumber"
                             placeholder="1111 1111 1111 1111"
                             type="text"
-                            defaultValue={user.cardNumber}
+                            defaultValue={user?.cardNumber}
                         />
                         <Input
                             isRequired
@@ -117,17 +135,17 @@ export default function FormProfileEditPage() {
                             name="cardExpirationDate"
                             placeholder="MM/YY"
                             type="text"
-                            defaultValue={user.cardExpirationDate}
+                            defaultValue={user?.cardExpirationDate}
                         />
                         <Input
                             isRequired
                             errorMessage="Please enter your card name"
                             label="Card Name"
                             labelPlacement="inside"
-                            name="cardName"
+                            name="cardHolderName"
                             placeholder="STARDROP EXAMPLE"
                             type="text"
-                            defaultValue={user.cardHolderName}
+                            defaultValue={user?.cardHolderName}
                         />
                         <Input
                             isRequired
@@ -137,7 +155,7 @@ export default function FormProfileEditPage() {
                             name="cardCVV"
                             placeholder="111"
                             type="number"
-                            defaultValue={user.cardCVV}
+                            defaultValue={user?.cardCVV}
                         />
 
                         {/* TODO: subir icon input type file */}

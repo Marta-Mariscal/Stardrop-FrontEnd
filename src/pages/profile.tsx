@@ -6,6 +6,7 @@ import { Button, Image, Spinner } from "@heroui/react";
 import { useGarments } from "@/store/garments";
 import { CardGarment } from "@/components/card-garment";
 import { useEffect } from "react";
+import defaultImage from "../../assets/img/icon-default.png";
 
 export default function ProfilePage() {
     const { user } = useUser();
@@ -49,7 +50,7 @@ export default function ProfilePage() {
             <section className="flex flex-col items-center gap-6 px-4 w-full">
                 <div className="w-full max-w-4xl bg-purple-100 dark:bg-purple-900 rounded-xl p-6 flex flex-col sm:flex-row items-center gap-4">
                     <Image
-                        src={"https://heroui.com/images/hero-card-complete.jpeg"}
+                        src={user?.icon || defaultImage}
                         alt="User avatar"
                         className="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover border-2 border-secondary"
                     />
