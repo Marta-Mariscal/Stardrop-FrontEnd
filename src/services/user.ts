@@ -47,9 +47,16 @@ export const login: (credential: Credential) => Promise<UserToken> = async (cred
 export const signUp: (user: User) => Promise<UserToken> = async (user: User) => {
     if (!user) throw new CustomException({ message: "User is required" });
 
+    const userData = new FormData();
+    if (user.iconBlob) {
+        userData.append("image", user.iconBlob);
+        delete user.iconBlob;
+    }
+    userData.append("user", JSON.stringify(user));
+
     const response = await fetch(`${BASE_URL}/users/signup`, {
         headers: {
-            "Content-Type": "application/json"
+            
         },
         method: "POST",
         body: JSON.stringify(user)

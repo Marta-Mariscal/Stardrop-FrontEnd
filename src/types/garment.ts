@@ -12,6 +12,7 @@ export type Garment = {
     category: string;
     gender: string;
     image?: string;
+    imageBlob?: any;
     type: string;
     web?: string;
     status?: string;

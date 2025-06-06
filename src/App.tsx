@@ -11,9 +11,26 @@ import FormPostGarmentPage from "./pages/form-post-garment";
 import CartPage from "./pages/cart";
 import WishlistPage from "./pages/wishlist";
 import GarmentPage from "./pages/garment";
+import LoginPage from "./pages/login";
+import SignUpPage from "./pages/sign-up";
+import SignUpCompanyPage from "./pages/sign-up-company";
 
 export const router = createBrowserRouter([
     {
+        path: "/login",
+        element: <LoginPage />,
+        loader: checkUnauthLoader
+    },
+    {
+        path: "/sign-up",
+        element: <SignUpPage />,
+        loader: checkUnauthLoader
+    },
+    {
+        path: "/sign-up-company",
+        element: <SignUpCompanyPage />,
+        loader: checkUnauthLoader
+    },{
         path: "/",
         children: [
             { index: true, element: <IndexPage /> },

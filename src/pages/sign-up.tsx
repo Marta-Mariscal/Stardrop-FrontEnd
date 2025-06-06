@@ -5,11 +5,13 @@ import { title } from "@/components/primitives";
 import { Form, Input, Button, Link, addToast, Image, Textarea } from "@heroui/react";
 import type { User } from "@/types/user";
 import { useUser } from "@/store/user";
+import { ImageInput } from "@/components/image-input";
 
 export default function SignUpPage() {
     const navigate = useNavigate();
     const loading = useUser((state) => state.loading);
     const signUp = useUser((state) => state.signUp);
+    const user = useUser((state) => state.user);
 
     const onSuccessHandler = () => {
         addToast({
@@ -34,6 +36,14 @@ export default function SignUpPage() {
         let data = Object.fromEntries(new FormData(e.currentTarget)) as unknown as User;
         data.type = "customer";
 
+        Object.keys(data).forEach((key) => {
+            if (data[key] === user[key] || (key === "password" && !data[key]) || (key === "iconBlob" && (!data[key].name || data[key].name.includes(user.icon)))) {
+                delete data[key];
+            } else if (data[key] === "" || data[key] === null) {
+                data[key] = user[key];
+            }
+        });
+
         signUp(data, { onSuccess: onSuccessHandler, onError: onErrorHandler });
     };
 
@@ -46,7 +56,7 @@ export default function SignUpPage() {
             <div className="flex justify-center pt-5">
                 <div className="w-full max-w-md bg-purple-300 rounded-2xl shadow-lg p-8 flex flex-col items-center">
                     <div className="flex items-center gap-4 mb-4">
-                        <Image src={logo} alt="Logo" className="w-14 h-14" radius="none"/>
+                        <Image src={logo} alt="Logo" className="w-14 h-14" radius="none" />
                         <div>
                             <h1 className="text-3xl font-semibold text-gray-800">Sign Up as Company</h1>
                             <p className="text-gray-500 text-sm">Create a new account for company</p>
@@ -54,6 +64,7 @@ export default function SignUpPage() {
                     </div>
 
                     <Form className="w-full flex flex-col gap-4" onSubmit={onSubmitHandler}>
+                        <ImageInput image={user?.icon} label="Icon" name="iconBlob" onChange={() => {}} />
                         <Input
                             isRequired
                             errorMessage="Please enter a valid email"
