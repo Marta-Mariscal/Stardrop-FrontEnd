@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import CredentialLayout from "@/layouts/credential";
 import logo from "../../assets/img/stardrop-logo.png";
 import { title } from "@/components/primitives";
-import { Form, Input, Textarea, Button, Link, addToast, Image, Spinner } from "@heroui/react";
+import { Form, Input, Textarea, Button, Link, addToast, Image } from "@heroui/react";
 import type { User } from "@/types/user";
 import { useUser } from "@/store/user";
 
@@ -10,7 +10,6 @@ export default function SignUpCompanyPage() {
     const navigate = useNavigate();
     const loading = useUser((state) => state.loading);
     const signUp = useUser((state) => state.signUp);
-    const user = useUser((state) => state.user);
 
     const onSuccessHandler = () => {
         addToast({
@@ -34,14 +33,6 @@ export default function SignUpCompanyPage() {
         e.preventDefault();
         let data = Object.fromEntries(new FormData(e.currentTarget)) as unknown as User;
         data.type = "company";
-
-        Object.keys(data).forEach((key) => {
-            if (data[key] === user[key] || (key === "password" && !data[key]) || (key === "iconBlob" && (!data[key].name || data[key].name.includes(user.icon)))) {
-                delete data[key];
-            } else if (data[key] === "" || data[key] === null) {
-                data[key] = user[key];
-            }
-        });
 
         signUp(data, { onSuccess: onSuccessHandler, onError: onErrorHandler });
     };
