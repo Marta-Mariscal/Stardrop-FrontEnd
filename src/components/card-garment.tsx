@@ -1,5 +1,5 @@
 import { type Garment } from "@/types/garment";
-import { Card, CardHeader, CardBody, Image, Chip } from "@heroui/react";
+import { Card, CardHeader, CardBody, Image, Chip, Avatar } from "@heroui/react";
 import { useNavigate } from "react-router-dom";
 import defaultImage from "../../assets/img/icon-default.png";
 
@@ -27,20 +27,30 @@ export const CardGarment = ({ garment, chips }: CardGarmentProps) => {
             >
                 <Card className="py-4">
                     <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
-                        <p className="text-tiny uppercase font-bold">{garment?.owner?.name}</p>
-                        {garment.type == "new" ? <small className="text-default-500">{garment.price}€</small> : <p className="text-tiny text-danger">{garment.price}€</p>}
+                        <div className="flex items-center gap-2 mb-1">
+                            <Avatar isBordered color="secondary" src={garment?.owner?.icon} className="size-8" />
+                            <p className="text-tiny uppercase font-bold">{garment?.owner?.name}</p>
+                        </div>
+
                         <h4 className="font-bold text-large">{garment.name}</h4>
+                        {garment.type === "new" ? (
+                            <small className="text-default-500">{garment.price}€</small>
+                        ) : (
+                            <p className="text-tiny text-danger">{garment.price}€</p>
+                        )}
                     </CardHeader>
+
                     <CardBody className="overflow-visible py-2">
                         <Image
                             alt="Card background"
-                            className="w-full h-auto object-cover rounded-xl"
+                            className="aspect-[5/4] w-full h-auto object-cover rounded-xl"
+                            
                             src={garment?.image || defaultImage}
                         />
 
                     </CardBody>
                     {chips && (
-                        <div className="flex flex-wrap gap-2 px-4 py-2">
+                        <div className="flex flex-row gap-2 px-4 py-2 items-center">
                             {chips.map((chip, index) => (
                                 <Chip key={index} color={chip.color || "default"}>{chip.label}</Chip>
                             ))}

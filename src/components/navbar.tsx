@@ -10,7 +10,8 @@ import {
     NavbarMenuToggle,
     NavbarMenu,
     NavbarMenuItem,
-    link as linkStyles
+    link as linkStyles,
+    Avatar
 } from "@heroui/react";
 import clsx from "clsx";
 import { ThemeSwitch } from "@/components/theme-switch";
@@ -78,13 +79,13 @@ export const Navbar = () => {
 
                         </>
                     }
+                    
                     <Button
                         as={Link}
                         className="text-sm font-normal text-default-600 bg-default-100"
                         onPress={onProfileHandler}
-                        startContent={<UserIcon className="text-secondary" />}
                         variant="flat"
-                    >
+                    ><Avatar isBordered color="secondary" src={user?.icon} className="size-8 mr-1" />
                         Profile
                     </Button>
                 </NavbarItem>
