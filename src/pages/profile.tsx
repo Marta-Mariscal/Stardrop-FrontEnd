@@ -1,21 +1,23 @@
 import { title } from "@/components/primitives";
 import DefaultLayout from "@/layouts/default";
 import { useNavigate } from "react-router-dom";
-import { useUser } from "../store/user";
 import { Button, Image, Spinner } from "@heroui/react";
+import { useUser } from "../store/user";
 import { useGarments } from "@/store/garments";
+import { useCart } from "@/store/cart";
 import { CardGarment } from "@/components/card-garment";
 import { useEffect } from "react";
 import defaultImage from "../../assets/img/icon-default.png";
 
 export default function ProfilePage() {
     const { user } = useUser();
-    const garments = useGarments((state) => state.garments);
     const loadingUser = useUser((state) => state.loading);
+    const logout = useUser((state) => state.logout);
+    const garments = useGarments((state) => state.garments);
     const loading = useGarments((state) => state.loading);
     const getGarments = useGarments((state) => state.getGarments);
+    const clearCart = useCart((state) => state.clearCart);
     const navigate = useNavigate();
-    const logout = useUser((state) => state.logout);
 
     useEffect(() => {
         getGarments({ me: true });
@@ -33,10 +35,13 @@ export default function ProfilePage() {
         }
     };
 
+    const onSuccessLogoutHandler = () => {
+        clearCart();
+        navigate("/login", { replace: true })
+    }
+
     const handleLogout = () => {
-        logout({
-            onSuccess: () => navigate("/login", { replace: true })
-        });
+        logout({ onSuccess: onSuccessLogoutHandler });
     };
 
     if (loadingUser) {
