@@ -24,8 +24,11 @@ export default function GarmentPage() {
     const sizes = sizeOptions[garment.category];
 
     useEffect(() => {
+        setSelectedSize(garment.type !== "new" ? garment.size || "" : "");
+
+        if (garment.type !== "new") { return; }
         getGarments({ garmentBase: garment._id });
-    }, []);
+    }, [garment.type]);
 
     const goPostGarmentHandler = () => {
         navigate("/form-post-garment", { replace: true });
@@ -71,6 +74,7 @@ export default function GarmentPage() {
                         <p className="text-gray-600 mb-4">{garment.description}</p>
 
                         <div className="flex flex-wrap items-center gap-2 mb-4">
+                            <Chip color={garment.type === "new" ? "success" : "danger"}>{garment.type}</Chip>
                             <Chip color="secondary">{garment.category}</Chip>
                             <Chip color="default">{garment.gender}</Chip>
                         </div>
@@ -96,8 +100,7 @@ export default function GarmentPage() {
                                             <button
                                                 key={garment.size}
                                                 onClick={() => setSelectedSize(garment.size)}
-                                                className={`px-4 py-2 rounded-full border text-sm font-medium transition ${selectedSize === garment.size ? "bg-secondary text-white border-secondary" : "bg-white text-gray-700 border-gray-300 hover:border-secondary"
-                                                    }`}
+                                                className={`px-4 py-2 rounded-full border text-sm font-medium transition ${selectedSize === garment.size ? "bg-secondary text-white border-secondary" : "bg-white text-gray-700 border-gray-300 hover:border-secondary"}`}
                                             >
                                                 {garment.size}
                                             </button>
@@ -106,8 +109,7 @@ export default function GarmentPage() {
                                                 <button
                                                     key={size}
                                                     onClick={() => setSelectedSize(size)}
-                                                    className={`px-4 py-2 rounded-full border text-sm font-medium transition ${selectedSize === size ? "bg-secondary text-white border-secondary" : "bg-white text-gray-700 border-gray-300 hover:border-secondary"
-                                                        }`}
+                                                    className={`px-4 py-2 rounded-full border text-sm font-medium transition ${selectedSize === size ? "bg-secondary text-white border-secondary" : "bg-white text-gray-700 border-gray-300 hover:border-secondary"}`}
                                                 >
                                                     {size}
                                                 </button>
@@ -151,7 +153,7 @@ export default function GarmentPage() {
                             </Button>
                         }
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {garments.map((g) => (
+                    {garments?.map((g) => (
                         <CardGarment key={g._id} garment={g} />
                     ))}
                 </div>
