@@ -26,7 +26,11 @@ export default function ProfilePage() {
     };
 
     const goUpdateHandler = () => {
-        navigate("/form-profile-edit", { replace: true });
+        if (user?.type == 'customer') {
+            navigate("/form-profile-edit", { replace: true });
+        } else {
+            navigate("/form-profile-edit-company", { replace: true });
+        }
     };
 
     const handleLogout = () => {
@@ -55,18 +59,18 @@ export default function ProfilePage() {
                         className="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover border-2 border-secondary"
                     />
                     <div className="flex-1 flex flex-col justify-center items-center sm:items-start w-full gap-6">
-                    <h1 className={`${title()} text-3xl sm:text-4xl`}>{user?.name}</h1>
+                        <h1 className={`${title()} text-3xl sm:text-4xl`}>{user?.name}</h1>
                         <div className="text-center sm:text-left text-sm text-default-600 dark:text-default-400 space-y-1">
-                        <div>📍 {user?.address}</div>
-                        {user?.web && (
+                            <div>📍 {user?.address}</div>
+                            {user?.web && (
                                 <div>
-                                <a href={user?.web} target="_blank" rel="noopener noreferrer" className="underline text-secondary">
-                                    {user?.web}
+                                    <a href={user?.web} target="_blank" rel="noopener noreferrer" className="underline text-secondary">
+                                        {user?.web}
                                     </a>
                                 </div>
                             )}
                             <div>
-                            📞 <strong>{user?.email}</strong> <span className="text-default-500">{'//'}</span> <strong>{user?.phone}</strong>
+                                📞 <strong>{user?.email}</strong> <span className="text-default-500">{'//'}</span> <strong>{user?.phone}</strong>
                             </div>
                         </div>
                     </div>
@@ -75,7 +79,7 @@ export default function ProfilePage() {
                         <Button color="secondary" className="text-sm sm:text-base" onPress={goUpdateHandler}>
                             Edit Profile
                         </Button>
-                    {user?.type == "company" &&
+                        {user?.type == "company" &&
                             <Button color="secondary" className="text-sm sm:text-base" onPress={goPostGarmentHandler}>
                                 Post Garment
                             </Button>
@@ -87,7 +91,7 @@ export default function ProfilePage() {
                 </div>
 
                 <div className="w-full max-w-4xl space-y-1 text-default-700 dark:text-default-300 text-sm sm:text-base text-center">
-                {user?.description && <div>{user?.description}</div>}
+                    {user?.description && <div>{user?.description}</div>}
                 </div>
 
                 {!loading && !garments?.length && (

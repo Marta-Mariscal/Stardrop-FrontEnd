@@ -14,6 +14,7 @@ import GarmentPage from "./pages/garment";
 import LoginPage from "./pages/login";
 import SignUpPage from "./pages/sign-up";
 import SignUpCompanyPage from "./pages/sign-up-company";
+import FormProfileEditCompanyPage from "./pages/form-profile-edit-company";
 
 export const router = createBrowserRouter([
     {
@@ -43,6 +44,11 @@ export const router = createBrowserRouter([
                 path: "/form-profile-edit",
                 id: "form-profile-edit",
                 element: <FormProfileEditPage />
+            },
+            {
+                path: "/form-profile-edit-company",
+                id: "form-profile-edit-company",
+                element: <FormProfileEditCompanyPage />
             },
             {
                 path: "/form-post-garment",
