@@ -61,11 +61,10 @@ export default function FormPostGarmentPage() {
     const onSubmitCompanyHandler = (e) => {
         let data = Object.fromEntries(new FormData(e.currentTarget)) as unknown as any
         data.type = "new"
-        console.log("Posting garment:", data)
-        // postGarment(data, {
-        //     onSuccess: onSuccessHandler,
-        //     onError: onErrorHandler
-        // })
+        postGarment(data, {
+            onSuccess: onSuccessHandler,
+            onError: onErrorHandler
+        })
     }
 
     const onSubmitCustomerHandler = (e) => {
