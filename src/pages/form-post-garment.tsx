@@ -59,7 +59,17 @@ export default function FormPostGarmentPage() {
     }
 
     const onSubmitCompanyHandler = (e) => {
-        let data = Object.fromEntries(new FormData(e.currentTarget)) as unknown as any
+        const formData = new FormData(e.currentTarget);
+
+        const data: any = {};
+        formData.forEach((value, key) => {
+            if (key === "colors") {
+                if (!data.colors) data.colors = [];
+                data.colors.push(value);
+            } else {
+                data[key] = value;
+            }
+        });
         data.type = "new"
         postGarment(data, {
             onSuccess: onSuccessHandler,
@@ -127,7 +137,7 @@ export default function FormPostGarmentPage() {
                     )}
 
                     <Form className="w-full flex flex-col gap-4" onSubmit={onSubmitHandler}>
-                        <ImageInput label="Image" name="imageBlob" onChange={() => {}} />
+                        <ImageInput label="Image" name="imageBlob" onChange={() => { }} />
                         <Input isRequired label="Name" name="name" placeholder="Stardrop" type="text" />
                         <Textarea isRequired label="Description" name="description" placeholder="This dress is in trend!" />
                         <Input isRequired label="Price" name="price" placeholder="19.99€" type="number" />

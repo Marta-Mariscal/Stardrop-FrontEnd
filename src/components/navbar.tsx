@@ -18,9 +18,11 @@ import logo from "../../assets/img/stardrop-logo.png";
 import { CartIcon, HeartFilledIcon, UserIcon } from "@/components/icons";
 import { siteConfig } from "@/config/site";
 import { SearchInput } from "./searchInput";
+import { useUser } from "@/store/user";
 
 export const Navbar = () => {
     const navigate = useNavigate();
+    const user = useUser((state) => state.user);
 
     const onWishlistHandler = () => {
         navigate("/wishlist", { replace: true });
@@ -40,11 +42,11 @@ export const Navbar = () => {
             <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
                 <NavbarBrand className="gap-3 max-w-fit">
                     <Link className="flex items-center gap-2" color="foreground" href="/">
-                        <Image src={logo} alt="Logo" className="w-8 h-8 object-contain" radius="none"/>
+                        <Image src={logo} alt="Logo" className="w-8 h-8 object-contain" radius="none" />
                         <p className="text-secondary font-bold text-2xl">STARDROP</p>
                     </Link>
                 </NavbarBrand>
-                
+
             </NavbarContent>
 
             <NavbarContent className="hidden sm:flex basis-1/5 sm:basis-full" justify="end">
@@ -52,24 +54,30 @@ export const Navbar = () => {
                     <ThemeSwitch />
                 </NavbarItem>
                 <NavbarItem className="hidden md:flex gap-3">
-                    <Button
-                        as={Link}
-                        className="text-sm font-normal text-default-600 bg-default-100"
-                        onPress={onWishlistHandler}
-                        startContent={<HeartFilledIcon className="text-secondary" />}
-                        variant="flat"
-                    >
-                        Wishlist
-                    </Button>
-                    <Button
-                        as={Link}
-                        className="text-sm font-normal text-default-600 bg-default-100"
-                        onPress={onCartHandler}
-                        startContent={<CartIcon className="text-secondary" />}
-                        variant="flat"
-                    >
-                        Cart
-                    </Button>
+                    {user?.type != "company" &&
+                        <>
+                            <Button
+                                as={Link}
+                                className="text-sm font-normal text-default-600 bg-default-100"
+                                onPress={onWishlistHandler}
+                                startContent={<HeartFilledIcon className="text-secondary" />}
+                                variant="flat"
+                            >
+                                Wishlist
+                            </Button>
+
+                            <Button
+                                as={Link}
+                                className="text-sm font-normal text-default-600 bg-default-100"
+                                onPress={onCartHandler}
+                                startContent={<CartIcon className="text-secondary" />}
+                                variant="flat"
+                            >
+                                Cart
+                            </Button>
+
+                        </>
+                    }
                     <Button
                         as={Link}
                         className="text-sm font-normal text-default-600 bg-default-100"
