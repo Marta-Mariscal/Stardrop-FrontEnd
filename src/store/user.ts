@@ -23,6 +23,7 @@ export const useUser = create<UserStore>((set, get) => ({
         loading: false,
         error: null,
         whoami: (callback) => {
+            set({ error: null });
             set({ loading: true });
             whoami()
             .then((response: User) => {
@@ -40,6 +41,7 @@ export const useUser = create<UserStore>((set, get) => ({
             });
         },
         login: (credential, callback) => {
+            set({ error: null });
             set({ loading: true });
             login(credential)
             .then((response: UserToken) => {
@@ -58,6 +60,7 @@ export const useUser = create<UserStore>((set, get) => ({
             });
         },
         signUp: (user, callback) => {
+            set({ error: null });
             set({ loading: true });
             signUp(user)
             .then((response: UserToken) => {
@@ -76,6 +79,7 @@ export const useUser = create<UserStore>((set, get) => ({
             });
         },
         logout: (callback) => {
+            set({ error: null });
             set({ loading: true });
             logout()
             .then((response: Data) => {
@@ -94,6 +98,7 @@ export const useUser = create<UserStore>((set, get) => ({
             });
         },
         update: (user, callback) => {
+            set({ error: null });
             set({ loading: true });
             update(user)
             .then((response: User) => {

@@ -10,13 +10,15 @@ import { useGarments } from "@/store/garments";
 import { useEffect } from "react";
 import { CardGarment } from "@/components/card-garment";
 import { useUser } from "@/store/user";
+import { useCart } from "@/store/cart";
 
 export default function GarmentPage() {
     const garment = useLoaderData() as Garment;
     const garments = useGarments((state) => state.garments);
     const getGarments = useGarments((state) => state.getGarments);
     const user = useUser((state) => state.user);
-     const navigate = useNavigate();
+    const addToCart = useCart((state) => state.addToCart);
+    const navigate = useNavigate();
 
     const [selectedSize, setSelectedSize] = useState("");
     const [error, setError] = useState("");
@@ -46,11 +48,22 @@ export default function GarmentPage() {
         }
 
         setError("");
-        const cartJSON = localStorage.getItem("cart");
-        const cart: (Garment & { selectedSize: string })[] = cartJSON ? JSON.parse(cartJSON) : [];
-        const garmentToAdd = { ...garment, selectedSize };
-        cart.push(garmentToAdd);
-        localStorage.setItem("cart", JSON.stringify(cart));
+        const data = addToCart({
+            base: garment,
+            size: selectedSize,
+            quantity: 1,
+            unitPrice: garment.price
+        });
+
+        if (data.error) {
+            addToast({
+                title: "Error adding item to cart",
+                description: data?.error?.message || "An unexpected error occurred while adding the item to the cart.",
+                color: "danger"
+            });
+
+            return;
+        }
 
         addToast({
             title: "Added to cart",
@@ -58,7 +71,7 @@ export default function GarmentPage() {
             color: "success"
         });
 
-        setSelectedSize("");
+        navigate("/cart", { replace: true });
     };
 
     return (
@@ -120,7 +133,7 @@ export default function GarmentPage() {
                         )}
 
                         <div className="flex gap-4">
-                            <Button color="secondary" variant="solid" onPress={handleAddToCart} disabled={!selectedSize}>
+                            <Button color="secondary" variant="solid" onPress={handleAddToCart}>
                                 Add to cart
                             </Button>
                             <Button

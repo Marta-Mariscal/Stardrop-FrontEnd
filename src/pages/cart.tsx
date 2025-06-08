@@ -1,71 +1,39 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import DefaultLayout from "@/layouts/default";
 import { Drawer, DrawerContent, DrawerHeader, DrawerBody, DrawerFooter, Button, Divider, Spinner } from "@heroui/react";
 import { CardGarment } from "@/components/card-garment";
-import { Garment } from "@/types/garment";
-import { User } from "@/types/user";
+import { type User } from "@/types/user";
+import { type GarmentItem } from "@/types/garment-item";
 import { useUser } from "@/store/user";
-import confetti from 'canvas-confetti'
-
-type GarmentWithQty = { garment: Garment; quantity: number };
+import confetti from "canvas-confetti";
+import { useCart } from "@/store/cart";
 
 export default function CartPage() {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-    const [cartItems, setCartItems] = useState<GarmentWithQty[]>([]);
-    const [totalPrice, setTotalPrice] = useState(0);
+    const cart = useCart((state) => state.cart);
+    const totalPrice = useCart((state) => state.getTotalPrice());
+    const addToCart = useCart((state) => state.addToCart);
+    const removeItem = useCart((state) => state.removeOneItemFromCart);
+    const removeAllItems = useCart((state) => state.removeAllItemsFromCart);
     const user: User = useUser((state) => state.user);
     const loading = useUser((state) => state.loading);
 
-    const groupCart = (items: Garment[]): GarmentWithQty[] => {
-        const grouped: { [key: string]: GarmentWithQty } = {};
-
-        for (const item of items) {
-            const key = `${item.name}-${item.size}-${JSON.stringify(item.colors)}`;
-            if (grouped[key]) {
-                grouped[key].quantity += 1;
-            } else {
-                grouped[key] = { garment: item, quantity: 1 };
-            }
-        }
-
-        return Object.values(grouped);
+    const addToCartHandler = (item: GarmentItem) => {
+        return () => {
+            addToCart(item);
+        };
     };
 
-    const ungroupCart = (items: GarmentWithQty[]): Garment[] => {
-        return items.flatMap(({ garment, quantity }) => Array(quantity).fill(garment));
+    const removeItemHandler = (item: GarmentItem) => {
+        return () => {
+            removeItem(item);
+        };
     };
 
-    const loadCartFromStorage = () => {
-        const cartJSON = localStorage.getItem("cart");
-        const rawItems: Garment[] = cartJSON ? JSON.parse(cartJSON) : [];
-        const groupedItems = groupCart(rawItems);
-        setCartItems(groupedItems);
-        updateTotal(groupedItems);
-    };
-
-    const updateTotal = (items: GarmentWithQty[]) => {
-        const total = items.reduce((acc, item) => acc + (item.garment.price || 0) * item.quantity, 0);
-        setTotalPrice(total);
-    };
-
-    const updateCart = (newItems: GarmentWithQty[]) => {
-        setCartItems(newItems);
-        localStorage.setItem("cart", JSON.stringify(ungroupCart(newItems)));
-        updateTotal(newItems);
-    };
-
-    const changeQuantity = (index: number, delta: number) => {
-        const updated = [...cartItems];
-        const newQty = updated[index].quantity + delta;
-        if (newQty < 1) return;
-        updated[index].quantity = newQty;
-        updateCart(updated);
-    };
-
-    const removeItem = (index: number) => {
-        const updated = [...cartItems];
-        updated.splice(index, 1);
-        updateCart(updated);
+    const removeAllItemsHandler = (item: GarmentItem) => {
+        return () => {
+            removeAllItems(item);
+        };
     };
 
     const makeOrder = () => {
@@ -74,13 +42,8 @@ export default function CartPage() {
             startVelocity: 30,
             spread: 360,
             origin: { y: 0.3 }
-            
         });
     };
-
-    useEffect(() => {
-        loadCartFromStorage();
-    }, []);
 
     if (loading) {
         return (
@@ -97,27 +60,37 @@ export default function CartPage() {
             <div className="flex flex-col items-center justify-center p-6 max-w-7xl mx-auto">
                 <h1 className="text-3xl font-bold mb-4">Shopping Cart</h1>
                 <div className="text-sm text-gray-600 mb-2">
-                    {cartItems.reduce((acc, item) => acc + (item.quantity || 1), 0)} item{cartItems.reduce((acc, item) => acc + (item.quantity || 1), 0) !== 1 && "s"} in the cart
+                    {cart?.length || 0} item{cart?.length > 1 && "s"} in the cart
                 </div>
 
                 <div className="text-lg font-semibold mb-6 text-secondary">Total: {totalPrice.toFixed(2)} €</div>
 
-                {cartItems.length > 0 ? (
+                {cart?.length > 0 ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full">
-                        {cartItems.map(({ garment, quantity }, index) => (
-                            <div key={index} className="flex flex-col gap-2">
-                                <CardGarment garment={garment} />
+                        {cart.map((item) => (
+                            <div key={item.base._id} className="flex flex-col gap-2">
+                                <CardGarment
+                                    garment={item.base}
+                                    chips={[
+                                        { label: item.base?.type, color: item.base?.type === "new" ? "success" : "danger" },
+                                        { label: item.size, color: "secondary" }
+                                    ]}
+                                />
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center gap-2">
-                                        <Button size="sm" variant="light" onPress={() => changeQuantity(index, -1)}>
-                                            −
-                                        </Button>
-                                        <span className="font-medium">{quantity}</span>
-                                        <Button size="sm" variant="light" onPress={() => changeQuantity(index, 1)}>
-                                            +
-                                        </Button>
+                                        {item.base.type === "new" && (
+                                            <>
+                                                <Button size="sm" variant="light" onPress={removeItemHandler(item)}>
+                                                    -
+                                                </Button>
+                                                <span className="font-medium">{item.quantity}</span>
+                                                <Button size="sm" variant="light" onPress={addToCartHandler(item)}>
+                                                    +
+                                                </Button>
+                                            </>
+                                        )}
                                     </div>
-                                    <Button size="sm" variant="light" color="danger" onPress={() => removeItem(index)}>
+                                    <Button size="sm" variant="light" color="danger" onPress={removeAllItemsHandler(item)} className="">
                                         Remove
                                     </Button>
                                 </div>
@@ -128,7 +101,7 @@ export default function CartPage() {
                     <p className="text-center text-gray-500">Your cart is empty.</p>
                 )}
 
-                {cartItems.length > 0 && (
+                {cart?.length > 0 && (
                     <Button color="secondary" className="mt-8 px-6 py-3" onPress={() => setIsDrawerOpen(true)}>
                         Buy now
                     </Button>
