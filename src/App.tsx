@@ -15,6 +15,7 @@ import LoginPage from "./pages/login";
 import SignUpPage from "./pages/sign-up";
 import SignUpCompanyPage from "./pages/sign-up-company";
 import FormProfileEditCompanyPage from "./pages/form-profile-edit-company";
+import OrderPage from "./pages/order";
 
 export const router = createBrowserRouter([
     {
@@ -75,6 +76,11 @@ export const router = createBrowserRouter([
                 path: "/garment/:id",
                 element: <GarmentPage />,
                 loader: getGarmentByIdLoader
+            },
+            {
+                path: "/order",
+                id: "order",
+                element: <OrderPage />
             }
         ],
         loader: checkAuthLoader

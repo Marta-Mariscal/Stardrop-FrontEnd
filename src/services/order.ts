@@ -1,18 +1,23 @@
 import { CustomException } from "@/exceptions/customException";
-import { Data } from "@/types/data";
-import { Garment } from "@/types/garment";
+import { type Order } from "@/types/order";
+import { type GarmentItem } from "@/types/garment-item";
+import { getAuthToken } from "./storage";
 
 const BASE_URL = import.meta.env.BACKEND_BASE_URL || "http://localhost:3000";
 
-export const makeOrder: (garments: Array<Garment>) => Promise<Data> = async (garments) => {
-    if (!garments) throw new CustomException({ message: "There is no garments to make an order" });
+export const makeOrder: (items: Array<GarmentItem>) => Promise<Order> = async (items) => {
+    const token = getAuthToken();
+    
+    if (!token) throw new CustomException({ message: "Token is required" });
+    if (!items?.length) throw new CustomException({ message: "There is no garments to make an order" });
 
     const response = await fetch(`${BASE_URL}/order`, {
         headers: {
-            'Content-Type': 'application/json'
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json"
         },
-        method: 'POST',
-        body: JSON.stringify(garments)
+        method: "POST",
+        body: JSON.stringify(items)
     });
 
     const { data, error } = await response.json();

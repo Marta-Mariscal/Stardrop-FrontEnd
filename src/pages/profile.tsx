@@ -27,6 +27,10 @@ export default function ProfilePage() {
         navigate("/form-post-garment", { replace: true });
     };
 
+    const goOrdersHandler = () => {
+        navigate("/order", { replace: true });
+    };
+
     const goUpdateHandler = () => {
         if (user?.type == 'customer') {
             navigate("/form-profile-edit", { replace: true });
@@ -87,6 +91,11 @@ export default function ProfilePage() {
                         {user?.type == "company" &&
                             <Button color="secondary" className="text-sm sm:text-base" onPress={goPostGarmentHandler}>
                                 Post Garment
+                            </Button>
+                        }
+                        {user?.type == "customer" &&
+                            <Button color="secondary" className="text-sm sm:text-base" onPress={goOrdersHandler}>
+                                Orders
                             </Button>
                         }
                         <Button color="danger" variant="light" className="text-sm sm:text-base" onPress={handleLogout}>

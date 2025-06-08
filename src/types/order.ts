@@ -1,11 +1,12 @@
-import { type Garment } from "./garment";
+import { type OrderItem } from "./order-item";
 import { type User } from "./user";
 
 export type Order = {
     _id: string;
     owner: User;
     date: Date;
-    garments: Garment[];
+    orderItems: OrderItem[];
+    totalPrice: number;
     createdAt: Date;
     updatedAt: Date;
 };

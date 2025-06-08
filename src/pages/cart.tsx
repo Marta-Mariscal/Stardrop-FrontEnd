@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import DefaultLayout from "@/layouts/default";
-import { Drawer, DrawerContent, DrawerHeader, DrawerBody, DrawerFooter, Button, Divider, Spinner } from "@heroui/react";
+import { Drawer, DrawerContent, DrawerHeader, DrawerBody, DrawerFooter, Button, Divider, Spinner, addToast } from "@heroui/react";
 import { CardGarment } from "@/components/card-garment";
 import { type User } from "@/types/user";
 import { type GarmentItem } from "@/types/garment-item";
+import { type Error } from "@/types/error";
 import { useUser } from "@/store/user";
 import confetti from "canvas-confetti";
 import { useCart } from "@/store/cart";
@@ -15,8 +17,11 @@ export default function CartPage() {
     const addToCart = useCart((state) => state.addToCart);
     const removeItem = useCart((state) => state.removeOneItemFromCart);
     const removeAllItems = useCart((state) => state.removeAllItemsFromCart);
+    const clearCart = useCart((state) => state.clearCart);
+    const makeOrder = useCart((state) => state.makeOrder);
     const user: User = useUser((state) => state.user);
     const loading = useUser((state) => state.loading);
+    const navigate = useNavigate();
 
     const addToCartHandler = (item: GarmentItem) => {
         return () => {
@@ -36,12 +41,34 @@ export default function CartPage() {
         };
     };
 
-    const makeOrder = () => {
+    const onSuccessHandler = () => {
+        clearCart();
+        addToast({
+            title: "Make order successfully",
+            description: "Order placed! 🌟",
+            color: "success"
+        });
         confetti({
             particleCount: 250,
             startVelocity: 30,
             spread: 360,
             origin: { y: 0.3 }
+        });
+        navigate("/order", { replace: true });
+    };
+
+    const onErrorHandler = (error: Error) => {
+        addToast({
+            title: "Make order failed",
+            description: error?.message || "Please try again later.",
+            color: "danger"
+        });
+    };
+
+    const makeOrderHandler = () => {
+        makeOrder({
+            onSuccess: onSuccessHandler,
+            onError: onErrorHandler
         });
     };
 
@@ -68,7 +95,7 @@ export default function CartPage() {
                 {cart?.length > 0 ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full">
                         {cart.map((item) => (
-                            <div key={item.base._id} className="flex flex-col gap-2">
+                            <div key={`${item.base._id}-${item.size}`} className="flex flex-col gap-2">
                                 <CardGarment
                                     garment={item.base}
                                     chips={[
@@ -156,7 +183,7 @@ export default function CartPage() {
                             <Button variant="light" color="secondary" onPress={() => setIsDrawerOpen(false)}>
                                 Cancel
                             </Button>
-                            <Button color="secondary" onPress={makeOrder}>
+                            <Button color="secondary" onPress={makeOrderHandler}>
                                 Confirm purchase
                             </Button>
                         </DrawerFooter>
