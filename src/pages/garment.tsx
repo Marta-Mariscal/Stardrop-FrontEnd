@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import { CardGarment } from "@/components/card-garment";
 import { useUser } from "@/store/user";
 import { useCart } from "@/store/cart";
+import defaultImage from "../../assets/img/icon-default.png";
 
 export default function GarmentPage() {
     const garment = useLoaderData() as Garment;
@@ -78,7 +79,7 @@ export default function GarmentPage() {
         <DefaultLayout>
             <div className="max-w-6xl mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="flex justify-center items-center">
-                    <Image src={garment.image || "https://heroui.com/images/hero-card-complete.jpeg"} alt={garment.name} className="rounded-lg w-full h-auto object-cover" />
+                    <Image src={garment.image || defaultImage} alt={garment.name} className="rounded-lg w-full h-auto object-cover" />
                 </div>
 
                 <div className="flex flex-col justify-between">
