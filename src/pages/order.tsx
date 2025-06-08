@@ -105,7 +105,7 @@ export default function OrderPage() {
                     </>
                 )}
             </div>
-            <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="5xl">
+            <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="5xl" scrollBehavior="inside">
                 <ModalContent>
                     {(onClose) => (
                         <>
