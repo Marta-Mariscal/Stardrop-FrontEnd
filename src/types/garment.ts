@@ -16,6 +16,7 @@ export type Garment = {
     type: string;
     web?: string;
     status?: string;
+    garmentBase?: string;
     owner?: User; 
     createdAt?: Date;
     updatedAt?: Date;

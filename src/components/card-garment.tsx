@@ -1,6 +1,7 @@
 import { type Garment } from "@/types/garment";
 import { Card, CardHeader, CardBody, Image, Chip } from "@heroui/react";
 import { useNavigate } from "react-router-dom";
+import defaultImage from "../../assets/img/icon-default.png";
 
 type ChipColor = "default" | "primary" | "secondary" | "success" | "warning" | "danger";
 
@@ -34,7 +35,7 @@ export const CardGarment = ({ garment, chips }: CardGarmentProps) => {
                         <Image
                             alt="Card background"
                             className="w-full h-auto object-cover rounded-xl"
-                            src="https://heroui.com/images/hero-card-complete.jpeg"
+                            src={garment?.image || defaultImage}
                         />
 
                     </CardBody>

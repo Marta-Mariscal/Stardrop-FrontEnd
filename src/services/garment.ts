@@ -89,13 +89,19 @@ export const postGarment: (garment: Garment) => Promise<Garment> = async (garmen
 
     if (!token) throw new CustomException({ message: "Token is required" });
 
+    const garmentData = new FormData();
+    if (garment.imageBlob) {
+        garmentData.append("image", garment.imageBlob);
+        delete garment.imageBlob;
+    }
+    garmentData.append("garment", JSON.stringify(garment));
+
     const response = await fetch(`${BASE_URL}/garment`, {
         headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json'
+            Authorization: `Bearer ${token}`
         },
         method: 'POST',
-        body: JSON.stringify(garment)
+        body: garmentData
     });
 
     const { data, error } = await response.json();

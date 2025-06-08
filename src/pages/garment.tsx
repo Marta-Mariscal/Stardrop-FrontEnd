@@ -33,7 +33,7 @@ export default function GarmentPage() {
     }, [garment.type]);
 
     const goPostGarmentHandler = () => {
-        navigate("/form-post-garment", { replace: true });
+        navigate(`/form-post-garment/${garment._id}`, { replace: true });
     };
 
     const handleAddToCart = () => {
@@ -161,10 +161,10 @@ export default function GarmentPage() {
                 (<div className="max-w-6xl mx-auto px-6 mt-16">
                 <h2 className="text-2xl font-bold mb-6">Second Hand:</h2>
                 {user.type == "customer" &&
-                            <Button color="secondary" className="text-sm sm:text-base p-5 mb-6" onPress={goPostGarmentHandler}>
-                                Post Garment
-                            </Button>
-                        }
+                    <Button color="secondary" className="text-sm sm:text-base p-5 mb-6" onPress={goPostGarmentHandler}>
+                        Post Garment
+                    </Button>
+                }
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {garments?.map((g) => (
                         <CardGarment key={g._id} garment={g} />

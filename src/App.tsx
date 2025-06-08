@@ -56,6 +56,12 @@ export const router = createBrowserRouter([
                 element: <FormPostGarmentPage />
             },
             {
+                path: "/form-post-garment/:id",
+                id: "form-post-garment-second-hand",
+                element: <FormPostGarmentPage />,
+                loader: getGarmentByIdLoader
+            },
+            {
                 path: "/cart",
                 id: "cart",
                 element: <CartPage />

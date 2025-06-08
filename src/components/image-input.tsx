@@ -29,7 +29,7 @@ export const ImageInput = ({ image, label, name, placeholder, errorMessage, onCh
     };
 
     return (
-        <div className="flex flex-col items-center gap-2 w-full mt-5">
+        <div className="flex flex-col items-center gap-2 w-full mt-1">
             <Input
                 errorMessage={errorMessage || "Invalid image! Please upload a valid image file."}
                 label={label || "Image"}

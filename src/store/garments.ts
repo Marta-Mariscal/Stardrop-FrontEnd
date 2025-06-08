@@ -22,7 +22,6 @@ export const useGarments = create<GarmentsStore>((set, get) => ({
     getGarments: (filters, callback) => {
         set({ error: null });
         set({ loading: true });
-        console.log("Fetching garments with filters:", filters);
         getGarments(filters)
             .then((response: Array<Garment>) => {
                 set({ garments: response });
@@ -43,7 +42,6 @@ export const useGarments = create<GarmentsStore>((set, get) => ({
         set({ loading: true });
         postGarment(garment)
             .then((response: Garment) => {
-                set({ garments: [...get().garments, response] });
                 if (callback?.onSuccess) callback.onSuccess(response);
             })
             .catch((error) => {
@@ -59,7 +57,6 @@ export const useGarments = create<GarmentsStore>((set, get) => ({
     getNewGarments: (filters, callback) => {
         set({ error: null });
         set({ loading: true });
-        console.log("Fetching garments with filters:", filters);
         getGarments(filters)
             .then((response: Array<Garment>) => {
                 set({ garments: response });
