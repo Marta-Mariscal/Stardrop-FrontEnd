@@ -95,7 +95,7 @@ export default function ProfilePage() {
                         }
                         {user?.type == "customer" &&
                             <Button color="secondary" className="text-sm sm:text-base" onPress={goOrdersHandler}>
-                                Orders
+                                View Orders
                             </Button>
                         }
                         <Button color="danger" variant="light" className="text-sm sm:text-base" onPress={handleLogout}>

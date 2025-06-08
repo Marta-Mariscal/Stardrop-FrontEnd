@@ -26,3 +26,23 @@ export const makeOrder: (items: Array<GarmentItem>) => Promise<Order> = async (i
 
     return data;
 };
+
+export const getOrders: () => Promise<Array<Order>> = async () => {
+    const token = getAuthToken();
+    
+    if (!token) throw new CustomException({ message: "Token is required" });
+
+    const response = await fetch(`${BASE_URL}/order`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json"
+        },
+        method: "GET"
+    });
+
+    const { data, error } = await response.json();
+
+    if (!response.ok) throw new CustomException(error);
+
+    return data.orders;
+}
