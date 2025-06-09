@@ -4,7 +4,6 @@ import logo from "../../assets/img/stardrop-logo.png";
 import { Form, Input, Button, Link, addToast, Image, Textarea } from "@heroui/react";
 import type { User } from "@/types/user";
 import { useUser } from "@/store/user";
-import { ImageInput } from "@/components/image-input";
 
 export default function SignUpPage() {
     const navigate = useNavigate();
@@ -93,15 +92,40 @@ export default function SignUpPage() {
                         />
                         <Input
                             isRequired
-                            errorMessage="Please enter your website"
-                            label="Website"
+                            errorMessage="Please enter your card number"
+                            label="Card Number"
                             labelPlacement="inside"
-                            name="website"
-                            placeholder="www.stardrop.com"
-                            type="url"
+                            name="cardNumber"
+                            placeholder="1111 1111 1111 1111"
+                            type="text"
                         />
-
-                        {/* TODO: subir icon input type file */}
+                        <Input
+                            isRequired
+                            errorMessage="Please enter your card expiration date"
+                            label="Card Expiration Date"
+                            labelPlacement="inside"
+                            name="cardExpirationDate"
+                            placeholder="MM/YY"
+                            type="text"
+                        />
+                        <Input
+                            isRequired
+                            errorMessage="Please enter your card name"
+                            label="Card Name"
+                            labelPlacement="inside"
+                            name="cardHolderName"
+                            placeholder="STARDROP EXAMPLE"
+                            type="text"
+                        />
+                        <Input
+                            isRequired
+                            errorMessage="Please enter your card CVV"
+                            label="Card CVV"
+                            labelPlacement="inside"
+                            name="cardCVV"
+                            placeholder="111"
+                            type="number"
+                        />
 
                         <div className="flex gap-2 justify-center pt-2">
                             <Button color="secondary" type="submit" isLoading={loading}>

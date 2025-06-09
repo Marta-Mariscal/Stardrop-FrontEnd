@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import CredentialLayout from "@/layouts/credential";
 import logo from "../../assets/img/stardrop-logo.png";
-import { title } from "@/components/primitives";
 import { Form, Input, Textarea, Button, Link, addToast, Image } from "@heroui/react";
 import type { User } from "@/types/user";
 import { useUser } from "@/store/user";
@@ -98,8 +97,6 @@ export default function SignUpCompanyPage() {
                             placeholder="www.stardrop.com"
                             type="url"
                         />
-
-                        {/* TODO: subir icon input type file */}
 
                         <div className="flex gap-2 justify-center pt-2">
                             <Button color="secondary" type="submit" isLoading={loading}>

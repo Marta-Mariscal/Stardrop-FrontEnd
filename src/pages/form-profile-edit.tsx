@@ -158,8 +158,6 @@ export default function FormProfileEditPage() {
                             defaultValue={user?.cardCVV}
                         />
 
-                        {/* TODO: subir icon input type file */}
-
                         <div className="flex justify-between w-full pt-2">
                             <Button color="secondary" type="submit" isLoading={loading}>
                                 Update
