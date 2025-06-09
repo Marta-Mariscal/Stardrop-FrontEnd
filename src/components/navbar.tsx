@@ -10,13 +10,11 @@ import {
     NavbarMenuToggle,
     NavbarMenu,
     NavbarMenuItem,
-    link as linkStyles,
     Avatar
 } from "@heroui/react";
-import clsx from "clsx";
 import { ThemeSwitch } from "@/components/theme-switch";
 import logo from "../../assets/img/stardrop-logo.png";
-import { CartIcon, HeartFilledIcon, UserIcon } from "@/components/icons";
+import { CartIcon, HeartIcon } from "@/components/icons";
 import { siteConfig } from "@/config/site";
 import { SearchInput } from "./searchInput";
 import { useUser } from "@/store/user";
@@ -61,7 +59,7 @@ export const Navbar = () => {
                                 as={Link}
                                 className="text-sm font-normal text-default-600 bg-default-100"
                                 onPress={onWishlistHandler}
-                                startContent={<HeartFilledIcon className="text-secondary" />}
+                                startContent={<HeartIcon className="text-secondary" filled />}
                                 variant="flat"
                             >
                                 Wishlist

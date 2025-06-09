@@ -17,6 +17,8 @@ export type Garment = {
     web?: string;
     status?: string;
     garmentBase?: string;
+    soldOut?: boolean;
+    isWishlisted?: boolean;
     owner?: User; 
     createdAt?: Date;
     updatedAt?: Date;

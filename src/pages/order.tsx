@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { EyeIcon } from "@/icons/eye-icon";
+import { EyeIcon } from "@/components/icons";
 import DefaultLayout from "@/layouts/default";
 import { useOrders } from "@/store/orders";
 import { Order } from "@/types/order";
