@@ -2,7 +2,7 @@ import { type Data } from "@/types/data";
 import { getAuthToken } from "./storage";
 import { CustomException } from "@/exceptions/customException";
 
-const BASE_URL = import.meta.env.BACKEND_BASE_URL || "http://localhost:3000";
+const BASE_URL = import.meta.env.BACKEND_BASE_URL || "https://stardrop-backend.onrender.com";
 
 export const addToWishlist: (id: string) => Promise<Data> = async (id) => {
     const token = getAuthToken();

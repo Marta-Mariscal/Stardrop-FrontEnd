@@ -3,7 +3,7 @@ import { type Order } from "@/types/order";
 import { type GarmentItem } from "@/types/garment-item";
 import { getAuthToken } from "./storage";
 
-const BASE_URL = import.meta.env.BACKEND_BASE_URL || "http://localhost:3000";
+const BASE_URL = import.meta.env.BACKEND_BASE_URL || "https://stardrop-backend.onrender.com";
 
 export const makeOrder: (items: Array<GarmentItem>) => Promise<Order> = async (items) => {
     const token = getAuthToken();

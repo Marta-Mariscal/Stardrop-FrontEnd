@@ -22,7 +22,7 @@ export default function GarmentPage() {
     const addToWishlist = useWishlist((state) => state.addToWishlist);
     const removeFromWishlist = useWishlist((state) => state.removeFromWishlist);
     const navigate = useNavigate();
-    
+
     const [garment, setGarment] = useState(initGarment);
     const [selectedSize, setSelectedSize] = useState("");
     const [error, setError] = useState("");
@@ -152,7 +152,7 @@ export default function GarmentPage() {
                             ))}
                         </div>
 
-                        {garment.type == "new" ? (
+                        {garment?.type == "new" ? (
                             <h2 className="text-2xl font-semibold text-secondary mb-4">{garment.price.toFixed(2)} €</h2>
                         ) : (
                             <h2 className="text-2xl font-semibold text-danger mb-4">{garment.price.toFixed(2)} €</h2>
@@ -187,9 +187,11 @@ export default function GarmentPage() {
                         )}
 
                         <div className="flex gap-4">
-                            <Button color="secondary" variant="solid" onPress={handleAddToCart}>
-                                Add to cart
-                            </Button>
+                            {garment?.soldOut != true &&
+                                <Button color="secondary" variant="solid" onPress={handleAddToCart}>
+                                    Add to cart
+                                </Button>
+                            }
                             <Button isIconOnly color="secondary" className="text-sm font-normal text-default-600 bg-default-100" variant="bordered" onPress={onWishlistHandler}>
                                 <HeartIcon className="text-secondary" filled={garment.isWishlisted} />
                             </Button>

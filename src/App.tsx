@@ -1,8 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
 import { checkUnauthLoader, checkAuthLoader } from "./loaders/auth";
 import { getGarmentByIdLoader } from "./loaders/garment";
-
 import IndexPage from "@/pages/index";
 import NotFound from "./pages/not-found";
 import ProfilePage from "./pages/profile";

@@ -1,7 +1,7 @@
 import { json } from "react-router-dom";
 import { getAuthToken } from "@/services/storage";
 
-const BASE_URL = import.meta.env.BACKEND_BASE_URL || "http://localhost:3000";
+const BASE_URL = import.meta.env.BACKEND_BASE_URL || "https://stardrop-backend.onrender.com";
 
 export const getGarmentByIdLoader = async ({ params }) => {
     const token = getAuthToken();

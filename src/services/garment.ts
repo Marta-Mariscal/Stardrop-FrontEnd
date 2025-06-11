@@ -3,7 +3,7 @@ import { getAuthToken } from "./storage";
 import { CustomException } from "@/exceptions/customException";
 import { GarmentServiceParams } from "@/types/garment-service-params";
 
-const BASE_URL = import.meta.env.BACKEND_BASE_URL || "http://localhost:3000";
+const BASE_URL = import.meta.env.BACKEND_BASE_URL || "https://stardrop-backend.onrender.com";
 
 const getUrlParams = (params?: GarmentServiceParams) => {
     if (!params) return '';
