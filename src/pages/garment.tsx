@@ -194,9 +194,11 @@ export default function GarmentPage() {
                         {!isMine && !isCompany && (
                             <>
                                 <div className="flex gap-4">
-                                    <Button color="secondary" variant="solid" onPress={handleAddToCart}>
-                                        Add to cart
-                                    </Button>
+                                    {garment?.soldOut != true &&
+                                        <Button color="secondary" variant="solid" onPress={handleAddToCart}>
+                                            Add to cart
+                                        </Button>
+                                    }
                                     <Button
                                         isIconOnly
                                         color="secondary"
