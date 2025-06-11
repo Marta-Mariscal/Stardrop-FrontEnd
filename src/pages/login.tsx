@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import CredentialLayout from "@/layouts/credential";
 import logo from "../../assets/img/stardrop-logo.png";
-import { Form, Input, Button, addToast, Image, Spinner } from "@heroui/react";
+import { Form, Input, Button, addToast, Image } from "@heroui/react";
 import type { Credential } from "@/types/credential";
 import { useUser } from "@/store/user";
 

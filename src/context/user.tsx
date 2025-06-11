@@ -6,7 +6,6 @@ import { removeAuthToken } from "@/services/storage";
 import { checkAuthLoader } from "@/loaders/auth";
 import { redirect } from "react-router-dom";
 
-// es como un guard para ver si ha expirdado el token y eso
 export function UserProvider({ children }) {
     const whoami = useUser(state => state.whoami);
     const clearCart = useCart(state => state.clearCart);
