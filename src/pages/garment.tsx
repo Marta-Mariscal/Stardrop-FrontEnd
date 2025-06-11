@@ -29,6 +29,9 @@ export default function GarmentPage() {
 
     const sizes = sizeOptions[garment.category];
 
+    const isMine = user?._id === garment?.owner?._id;
+    const isCompany = user?.type === "company";
+
     useEffect(() => {
         setSelectedSize(garment.type !== "new" ? garment.size || "" : "");
 
@@ -106,7 +109,7 @@ export default function GarmentPage() {
                 });
             }
         });
-    }
+    };
 
     const removeFromWishlistHandler = () => {
         removeFromWishlist(garment._id, {
@@ -126,7 +129,7 @@ export default function GarmentPage() {
                 });
             }
         });
-    }
+    };
 
     return (
         <DefaultLayout>
@@ -167,6 +170,7 @@ export default function GarmentPage() {
                                             key={garment.size}
                                             onClick={() => setSelectedSize(garment.size)}
                                             className={`px-4 py-2 rounded-full border text-sm font-medium transition ${selectedSize === garment.size ? "bg-secondary text-white border-secondary" : "bg-white text-gray-700 border-gray-300 hover:border-secondary"}`}
+                                            disabled={isCompany}
                                         >
                                             {garment.size}
                                         </button>
@@ -176,6 +180,7 @@ export default function GarmentPage() {
                                                 key={size}
                                                 onClick={() => setSelectedSize(size)}
                                                 className={`px-4 py-2 rounded-full border text-sm font-medium transition ${selectedSize === size ? "bg-secondary text-white border-secondary" : "bg-white text-gray-700 border-gray-300 hover:border-secondary"}`}
+                                                disabled={isCompany}
                                             >
                                                 {size}
                                             </button>
@@ -186,16 +191,24 @@ export default function GarmentPage() {
                             </div>
                         )}
 
-                        <div className="flex gap-4">
-                            {garment?.soldOut != true &&
-                                <Button color="secondary" variant="solid" onPress={handleAddToCart}>
-                                    Add to cart
-                                </Button>
-                            }
-                            <Button isIconOnly color="secondary" className="text-sm font-normal text-default-600 bg-default-100" variant="bordered" onPress={onWishlistHandler}>
-                                <HeartIcon className="text-secondary" filled={garment.isWishlisted} />
-                            </Button>
-                        </div>
+                        {!isMine && !isCompany && (
+                            <>
+                                <div className="flex gap-4">
+                                    <Button color="secondary" variant="solid" onPress={handleAddToCart}>
+                                        Add to cart
+                                    </Button>
+                                    <Button
+                                        isIconOnly
+                                        color="secondary"
+                                        className="text-sm font-normal text-default-600 bg-default-100"
+                                        variant="bordered"
+                                        onPress={onWishlistHandler}
+                                    >
+                                        <HeartIcon className="text-secondary" filled={garment.isWishlisted} />
+                                    </Button>
+                                </div>
+                            </>
+                        )}
                     </div>
 
                     {garment.owner && (
@@ -209,7 +222,7 @@ export default function GarmentPage() {
                 </div>
             </div>
 
-            {garment.type == "new" && user?.type != "company" && (
+            {garment.type == "new" && !isCompany && (
                 <div className="max-w-6xl mx-auto px-6 mt-16">
                     <h2 className="text-2xl font-bold mb-6">Second Hand:</h2>
                     {user.type == "customer" && (
