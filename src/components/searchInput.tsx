@@ -17,7 +17,8 @@ export const SearchInput = ({ value, label, placeholder, fullWidth, onChange, on
     const debouncedSearch = useCallback(
         debounce((e) => {
             onChange(e);
-        }, 300), []
+        }, 300),
+        []
     );
 
     const onChangeHandler = (e) => {

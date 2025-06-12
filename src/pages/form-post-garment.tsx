@@ -1,62 +1,62 @@
-import { useEffect, useState } from "react"
-import { useNavigate, useLoaderData } from "react-router-dom"
-import logo from "../../assets/img/stardrop-logo.png"
-import { Form, Input, Button, Image, addToast, Textarea, Select, SelectItem, Spinner, Chip } from "@heroui/react"
-import { type Garment } from "@/types/garment"
-import { useUser } from "@/store/user"
-import { useGarments } from "@/store/garments"
-import DefaultLayout from "@/layouts/default"
-import { sizeOptions } from "@/types/garment-sizes"
-import { categoriesGarment } from "@/types/garment-categories"
-import { colorsGarment } from "@/types/garment-colors"
-import { gendersGarment } from "@/types/garment-genders"
-import { statesGarment } from "@/types/garment-status"
-import { ImageInput } from "@/components/image-input"
-import defaultImage from "../../assets/img/icon-default.png"
+import { useEffect, useState } from "react";
+import { useNavigate, useLoaderData } from "react-router-dom";
+import logo from "../../assets/img/stardrop-logo.png";
+import { Form, Input, Button, Image, addToast, Textarea, Select, SelectItem, Spinner, Chip } from "@heroui/react";
+import { type Garment } from "@/types/garment";
+import { useUser } from "@/store/user";
+import { useGarments } from "@/store/garments";
+import DefaultLayout from "@/layouts/default";
+import { sizeOptions } from "@/types/garment-sizes";
+import { categoriesGarment } from "@/types/garment-categories";
+import { colorsGarment } from "@/types/garment-colors";
+import { gendersGarment } from "@/types/garment-genders";
+import { statesGarment } from "@/types/garment-status";
+import { ImageInput } from "@/components/image-input";
+import defaultImage from "../../assets/img/icon-default.png";
 
 export default function FormPostGarmentPage() {
-    const garment = useLoaderData() as Garment
-    const user = useUser((state) => state.user)
-    const loading = useUser((state) => state.loading)
-    const postGarment = useGarments((state) => state.postGarment)
-    const navigate = useNavigate()
+    const garment = useLoaderData() as Garment;
+    const user = useUser((state) => state.user);
+    const loading = useUser((state) => state.loading);
+    const postGarment = useGarments((state) => state.postGarment);
+    const navigate = useNavigate();
 
-    const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
     useEffect(() => {
         if (!garment) {
-            return
+            return;
         }
 
-        setSelectedCategory(garment?.category)
-    }, [garment])
+        setSelectedCategory(garment?.category);
+    }, [garment]);
     const onSuccessHandler = () => {
         addToast({
             title: "Post garment successfully",
             description: "Posted! 🌟",
             color: "success"
-        })
-        navigate("/", { replace: true })
-    }
+        });
+        navigate("/", { replace: true });
+    };
 
     const onErrorHandler = (error: Error) => {
         addToast({
             title: "Post garment failed",
             description: error?.message || "Please try again later.",
             color: "danger"
-        })
-    }
+        });
+    };
 
     const onSubmitHandler = (e) => {
-        e.preventDefault()
+        e.preventDefault();
         if (user?.type == "company") {
-            onSubmitCompanyHandler(e)
+            onSubmitCompanyHandler(e);
         } else if (user?.type == "customer") {
-            onSubmitCustomerHandler(e)
+            onSubmitCustomerHandler(e);
         } else {
-            throw new Error("Invalid user type")
+            throw new Error("Invalid user type");
         }
-    }
+    };
 
     const onSubmitCompanyHandler = (e) => {
         const formData = new FormData(e.currentTarget);
@@ -70,12 +70,12 @@ export default function FormPostGarmentPage() {
                 data[key] = value;
             }
         });
-        data.type = "new"
+        data.type = "new";
         postGarment(data, {
             onSuccess: onSuccessHandler,
             onError: onErrorHandler
-        })
-    }
+        });
+    };
 
     const onSubmitCustomerHandler = (e) => {
         if (!garment) {
@@ -83,23 +83,23 @@ export default function FormPostGarmentPage() {
                 title: "Cannot post garment",
                 description: "No base garment found.",
                 color: "danger"
-            })
-            return
+            });
+            return;
         }
 
-        let data = Object.fromEntries(new FormData(e.currentTarget)) as unknown as Garment
-        data.type = "second-hand"
-        data.garmentBase = garment._id
-        data.category = garment.category
-        data.colors = garment.colors
-        data.gender = garment.gender
+        let data = Object.fromEntries(new FormData(e.currentTarget)) as unknown as Garment;
+        data.type = "second-hand";
+        data.garmentBase = garment._id;
+        data.category = garment.category;
+        data.colors = garment.colors;
+        data.gender = garment.gender;
 
-        console.log("Posting garment:", data)
+        console.log("Posting garment:", data);
         postGarment(data, {
             onSuccess: onSuccessHandler,
             onError: onErrorHandler
-        })
-    }
+        });
+    };
 
     if (loading) {
         return (
@@ -108,7 +108,7 @@ export default function FormPostGarmentPage() {
                     <Spinner color="secondary" label="Loading..." labelColor="secondary" />
                 </div>
             </DefaultLayout>
-        )
+        );
     }
 
     return (
@@ -137,7 +137,7 @@ export default function FormPostGarmentPage() {
                     )}
 
                     <Form className="w-full flex flex-col gap-4" onSubmit={onSubmitHandler}>
-                        <ImageInput label="Image" name="imageBlob" onChange={() => { }} />
+                        <ImageInput label="Image" name="imageBlob" onChange={() => {}} />
                         <Input isRequired label="Name" name="name" placeholder="Stardrop" type="text" />
                         <Textarea isRequired label="Description" name="description" placeholder="This dress is in trend!" />
                         <Input isRequired label="Price" name="price" placeholder="19.99€" type="number" />
@@ -145,8 +145,8 @@ export default function FormPostGarmentPage() {
                             label="Category"
                             placeholder="Select a category"
                             onSelectionChange={(keys) => {
-                                const keyArray = Array.from(keys)
-                                setSelectedCategory(keyArray.length ? String(keyArray[0]) : null)
+                                const keyArray = Array.from(keys);
+                                setSelectedCategory(keyArray.length ? String(keyArray[0]) : null);
                             }}
                             name="category"
                             selectedKeys={selectedCategory ? [selectedCategory] : []}
@@ -210,5 +210,5 @@ export default function FormPostGarmentPage() {
                 </div>
             </div>
         </DefaultLayout>
-    )
+    );
 }

@@ -1,17 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import {
-    Button,
-    Image,
-    Link,
-    Navbar as HeroUINavbar,
-    NavbarBrand,
-    NavbarContent,
-    NavbarItem,
-    NavbarMenuToggle,
-    NavbarMenu,
-    NavbarMenuItem,
-    Avatar
-} from "@heroui/react";
+import { Button, Image, Link, Navbar as HeroUINavbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, Avatar } from "@heroui/react";
 import { ThemeSwitch } from "@/components/theme-switch";
 import logo from "../../assets/img/stardrop-logo.png";
 import { CartIcon, HeartIcon } from "@/components/icons";
@@ -52,7 +40,7 @@ export const Navbar = () => {
                     <ThemeSwitch />
                 </NavbarItem>
                 <NavbarItem className="hidden md:flex gap-3">
-                    {user?.type != "company" &&
+                    {user?.type != "company" && (
                         <>
                             <Button
                                 as={Link}
@@ -73,23 +61,18 @@ export const Navbar = () => {
                             >
                                 Cart
                             </Button>
-
                         </>
-                    }
-                    <Button
-                        as={Link}
-                        className="text-sm font-normal text-default-600 bg-default-100"
-                        onPress={onProfileHandler}
-                        variant="flat"
-                    ><Avatar isBordered color="secondary" src={user?.icon} className="size-8 mr-1" />
+                    )}
+                    <Button as={Link} className="text-sm font-normal text-default-600 bg-default-100" onPress={onProfileHandler} variant="flat">
+                        <Avatar isBordered color="secondary" src={user?.icon} className="size-8 mr-1" />
                         Profile
                     </Button>
                 </NavbarItem>
             </NavbarContent>
 
             <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
-                <ThemeSwitch/>
-                <NavbarMenuToggle/>
+                <ThemeSwitch />
+                <NavbarMenuToggle />
             </NavbarContent>
 
             <NavbarMenu>

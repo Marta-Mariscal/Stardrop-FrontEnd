@@ -6,7 +6,7 @@ import { GarmentServiceParams } from "@/types/garment-service-params";
 const BASE_URL = import.meta.env.BACKEND_BASE_URL || "https://stardrop-backend.onrender.com";
 
 const getUrlParams = (params?: GarmentServiceParams) => {
-    if (!params) return '';
+    if (!params) return "";
 
     let output = [];
 
@@ -62,8 +62,8 @@ const getUrlParams = (params?: GarmentServiceParams) => {
         output.push(`skip=${params.skip}`);
     }
 
-    return output.length ? `?${output.join("&")}` : '';
-}
+    return output.length ? `?${output.join("&")}` : "";
+};
 
 export const getGarments: (params?: GarmentServiceParams) => Promise<Array<Garment>> = async (params) => {
     const token = getAuthToken();
@@ -74,7 +74,7 @@ export const getGarments: (params?: GarmentServiceParams) => Promise<Array<Garme
         headers: {
             Authorization: `Bearer ${token}`
         },
-        method: 'GET'
+        method: "GET"
     });
 
     const { data, error } = await response.json();
@@ -82,7 +82,7 @@ export const getGarments: (params?: GarmentServiceParams) => Promise<Array<Garme
     if (!response.ok) throw new CustomException(error);
 
     return data.garments;
-}
+};
 
 export const postGarment: (garment: Garment) => Promise<Garment> = async (garment) => {
     const token = getAuthToken();
@@ -100,7 +100,7 @@ export const postGarment: (garment: Garment) => Promise<Garment> = async (garmen
         headers: {
             Authorization: `Bearer ${token}`
         },
-        method: 'POST',
+        method: "POST",
         body: garmentData
     });
 
@@ -109,7 +109,7 @@ export const postGarment: (garment: Garment) => Promise<Garment> = async (garmen
     if (!response.ok) throw new CustomException(error);
 
     return data.garment;
-}
+};
 
 export const getNewGarments: (params?: GarmentServiceParams) => Promise<Array<Garment>> = async (params) => {
     const token = getAuthToken();
@@ -122,7 +122,7 @@ export const getNewGarments: (params?: GarmentServiceParams) => Promise<Array<Ga
         headers: {
             Authorization: `Bearer ${token}`
         },
-        method: 'GET'
+        method: "GET"
     });
 
     const { data, error } = await response.json();
@@ -130,4 +130,4 @@ export const getNewGarments: (params?: GarmentServiceParams) => Promise<Array<Ga
     if (!response.ok) throw new CustomException(error);
 
     return data.garments;
-}
+};

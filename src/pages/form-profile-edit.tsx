@@ -60,7 +60,7 @@ export default function FormProfileEditPage() {
             <div className="flex justify-center pt-5">
                 <div className="w-full max-w-md bg-purple-300 rounded-2xl shadow-lg p-8 flex flex-col items-center">
                     <div className="flex items-center gap-4 mb-4">
-                        <Image src={logo} alt="Logo" className="w-14 h-14" radius="none"/>
+                        <Image src={logo} alt="Logo" className="w-14 h-14" radius="none" />
                         <div>
                             <h1 className="text-3xl font-semibold text-gray-800">Edit your account</h1>
                             {/* No agregué subtítulo para que sea igual al ejemplo */}
@@ -68,7 +68,7 @@ export default function FormProfileEditPage() {
                     </div>
 
                     <Form className="w-full flex flex-col gap-4" onSubmit={onSubmitHandler}>
-                        <ImageInput image={user?.icon} label="Icon" name="iconBlob" onChange={() => {}}/>
+                        <ImageInput image={user?.icon} label="Icon" name="iconBlob" onChange={() => {}} />
                         <Input
                             isRequired
                             errorMessage="Please enter a valid email"

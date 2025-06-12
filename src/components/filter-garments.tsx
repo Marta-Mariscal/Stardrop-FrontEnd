@@ -116,7 +116,9 @@ export const FilterGarments = () => {
 
     return (
         <>
-            <Button variant="flat" color="secondary" onPress={onOpen}>Filters</Button>
+            <Button variant="flat" color="secondary" onPress={onOpen}>
+                Filters
+            </Button>
             <Drawer isDismissable={false} isKeyboardDismissDisabled={true} isOpen={isOpen} onOpenChange={onOpenChange}>
                 <DrawerContent>
                     {
@@ -139,7 +141,7 @@ export const FilterGarments = () => {
                                                         </Checkbox>
                                                     ))}
                                                 </CheckboxGroup>
-                                                <Divider className="mt-4"/>
+                                                <Divider className="mt-4" />
                                             </div>
                                         );
                                     }

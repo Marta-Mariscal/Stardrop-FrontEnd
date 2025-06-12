@@ -117,15 +117,7 @@ export default function SignUpPage() {
                             placeholder="STARDROP EXAMPLE"
                             type="text"
                         />
-                        <Input
-                            isRequired
-                            errorMessage="Please enter your card CVV"
-                            label="Card CVV"
-                            labelPlacement="inside"
-                            name="cardCVV"
-                            placeholder="111"
-                            type="number"
-                        />
+                        <Input isRequired errorMessage="Please enter your card CVV" label="Card CVV" labelPlacement="inside" name="cardCVV" placeholder="111" type="number" />
 
                         <div className="flex gap-2 justify-center pt-2">
                             <Button color="secondary" type="submit" isLoading={loading}>

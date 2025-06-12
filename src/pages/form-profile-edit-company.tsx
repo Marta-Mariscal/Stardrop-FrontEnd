@@ -67,7 +67,7 @@ export default function FormProfileEditCompanyPage() {
                     </div>
 
                     <Form className="w-full flex flex-col gap-4" onSubmit={onSubmitHandler}>
-                        <ImageInput image={user?.icon} label="Icon" name="iconBlob" onChange={() => { }} />
+                        <ImageInput image={user?.icon} label="Icon" name="iconBlob" onChange={() => {}} />
                         <Input
                             isRequired
                             errorMessage="Please enter a valid email"

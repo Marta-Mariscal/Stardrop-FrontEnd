@@ -3,7 +3,24 @@ import { EyeIcon } from "@/components/icons";
 import DefaultLayout from "@/layouts/default";
 import { useOrders } from "@/store/orders";
 import { Order } from "@/types/order";
-import { Button, Chip, getKeyValue, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Tooltip, useDisclosure } from "@heroui/react";
+import {
+    Button,
+    Chip,
+    getKeyValue,
+    Modal,
+    ModalBody,
+    ModalContent,
+    ModalFooter,
+    ModalHeader,
+    Table,
+    TableBody,
+    TableCell,
+    TableColumn,
+    TableHeader,
+    TableRow,
+    Tooltip,
+    useDisclosure
+} from "@heroui/react";
 import { CardGarment } from "@/components/card-garment";
 
 const COLUMNS = [
@@ -34,7 +51,7 @@ export default function OrderPage() {
     const loading = useOrders((state) => state.loading);
     const error = useOrders((state) => state.error);
     const getOrders = useOrders((state) => state.getOrders);
-    const {isOpen, onOpen, onOpenChange} = useDisclosure();
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [record, setRecord] = useState<Order>();
 
     useEffect(() => {
@@ -133,24 +150,25 @@ export default function OrderPage() {
                                             <strong>Garments:</strong>
                                         </div>
                                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6 w-full">
-                                            {record?.orderItems?.length && record?.orderItems?.map((item) => (
-                                                <div key={`${item.garment._id}-${item.size}`} className="flex flex-col gap-2">
-                                                    <CardGarment
-                                                        garment={item.garment}
-                                                        chips={[
-                                                            { label: item.garment?.type, color: item.garment?.type === "new" ? "success" : "danger" },
-                                                            { label: item.size, color: "secondary" },
-                                                            { label: `x${item.quantity}`, color: "warning" }
-                                                        ]}
-                                                    />
-                                                </div>
-                                            ))}
+                                            {record?.orderItems?.length &&
+                                                record?.orderItems?.map((item) => (
+                                                    <div key={`${item.garment._id}-${item.size}`} className="flex flex-col gap-2">
+                                                        <CardGarment
+                                                            garment={item.garment}
+                                                            chips={[
+                                                                { label: item.garment?.type, color: item.garment?.type === "new" ? "success" : "danger" },
+                                                                { label: item.size, color: "secondary" },
+                                                                { label: `x${item.quantity}`, color: "warning" }
+                                                            ]}
+                                                        />
+                                                    </div>
+                                                ))}
                                         </div>
                                     </>
                                 )}
                             </ModalBody>
                             <ModalFooter>
-                                <Button color="primary" onPress={onClose}>
+                                <Button color="secondary" onPress={onClose}>
                                     Done
                                 </Button>
                             </ModalFooter>

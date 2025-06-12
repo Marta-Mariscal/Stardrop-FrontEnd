@@ -32,7 +32,7 @@ export default function ProfilePage() {
     };
 
     const goUpdateHandler = () => {
-        if (user?.type == 'customer') {
+        if (user?.type == "customer") {
             navigate("/form-profile-edit", { replace: true });
         } else {
             navigate("/form-profile-edit-company", { replace: true });
@@ -41,8 +41,8 @@ export default function ProfilePage() {
 
     const onSuccessLogoutHandler = () => {
         clearCart();
-        navigate("/login", { replace: true })
-    }
+        navigate("/login", { replace: true });
+    };
 
     const handleLogout = () => {
         logout({ onSuccess: onSuccessLogoutHandler });
@@ -62,11 +62,7 @@ export default function ProfilePage() {
         <DefaultLayout>
             <section className="flex flex-col items-center gap-6 px-4 w-full">
                 <div className="w-full max-w-4xl bg-purple-100 dark:bg-purple-900 rounded-xl p-6 flex flex-col sm:flex-row items-center gap-4">
-                    <Image
-                        src={user?.icon || defaultImage}
-                        alt="User avatar"
-                        className="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover border-2 border-secondary"
-                    />
+                    <Image src={user?.icon || defaultImage} alt="User avatar" className="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover border-2 border-secondary" />
                     <div className="flex-1 flex flex-col justify-center items-center sm:items-start w-full gap-6">
                         <h1 className={`${title()} text-3xl sm:text-4xl`}>{user?.name}</h1>
                         <div className="text-center sm:text-left text-sm text-default-600 dark:text-default-400 space-y-1">
@@ -79,7 +75,7 @@ export default function ProfilePage() {
                                 </div>
                             )}
                             <div>
-                                📞 <strong>{user?.email}</strong> <span className="text-default-500">{'//'}</span> <strong>{user?.phone}</strong>
+                                📞 <strong>{user?.email}</strong> <span className="text-default-500">{"//"}</span> <strong>{user?.phone}</strong>
                             </div>
                         </div>
                     </div>
@@ -88,16 +84,16 @@ export default function ProfilePage() {
                         <Button color="secondary" className="text-sm sm:text-base" onPress={goUpdateHandler}>
                             Edit Profile
                         </Button>
-                        {user?.type == "company" &&
+                        {user?.type == "company" && (
                             <Button color="secondary" className="text-sm sm:text-base" onPress={goPostGarmentHandler}>
                                 Post Garment
                             </Button>
-                        }
-                        {user?.type == "customer" &&
+                        )}
+                        {user?.type == "customer" && (
                             <Button color="secondary" className="text-sm sm:text-base" onPress={goOrdersHandler}>
                                 View Orders
                             </Button>
-                        }
+                        )}
                         <Button color="danger" variant="light" className="text-sm sm:text-base" onPress={handleLogout}>
                             Log out
                         </Button>

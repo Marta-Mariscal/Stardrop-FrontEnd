@@ -7,7 +7,7 @@ const BASE_URL = import.meta.env.BACKEND_BASE_URL || "https://stardrop-backend.o
 
 export const makeOrder: (items: Array<GarmentItem>) => Promise<Order> = async (items) => {
     const token = getAuthToken();
-    
+
     if (!token) throw new CustomException({ message: "Token is required" });
     if (!items?.length) throw new CustomException({ message: "There is no garments to make an order" });
 
@@ -29,7 +29,7 @@ export const makeOrder: (items: Array<GarmentItem>) => Promise<Order> = async (i
 
 export const getOrders: () => Promise<Array<Order>> = async () => {
     const token = getAuthToken();
-    
+
     if (!token) throw new CustomException({ message: "Token is required" });
 
     const response = await fetch(`${BASE_URL}/order`, {
@@ -45,4 +45,4 @@ export const getOrders: () => Promise<Array<Order>> = async () => {
     if (!response.ok) throw new CustomException(error);
 
     return data.orders;
-}
+};

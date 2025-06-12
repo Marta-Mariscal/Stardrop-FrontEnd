@@ -14,7 +14,7 @@ export const getWishlist: () => Promise<Garment[]> = async () => {
         headers: {
             Authorization: `Bearer ${token}`
         },
-        method: 'GET'
+        method: "GET"
     });
 
     const { data, error } = await response.json();
@@ -22,7 +22,7 @@ export const getWishlist: () => Promise<Garment[]> = async () => {
     if (!response.ok) throw new CustomException(error);
 
     return data.wishlist;
-}
+};
 
 export const addToWishlist: (id: string) => Promise<Data> = async (id) => {
     const token = getAuthToken();
@@ -33,7 +33,7 @@ export const addToWishlist: (id: string) => Promise<Data> = async (id) => {
         headers: {
             Authorization: `Bearer ${token}`
         },
-        method: 'POST'
+        method: "POST"
     });
 
     const { data, error } = await response.json();
@@ -41,7 +41,7 @@ export const addToWishlist: (id: string) => Promise<Data> = async (id) => {
     if (!response.ok) throw new CustomException(error);
 
     return data;
-}
+};
 
 export const removeFromWishlist: (id: string) => Promise<Data> = async (id) => {
     const token = getAuthToken();
@@ -52,7 +52,7 @@ export const removeFromWishlist: (id: string) => Promise<Data> = async (id) => {
         headers: {
             Authorization: `Bearer ${token}`
         },
-        method: 'DELETE'
+        method: "DELETE"
     });
 
     const { data, error } = await response.json();
@@ -60,4 +60,4 @@ export const removeFromWishlist: (id: string) => Promise<Data> = async (id) => {
     if (!response.ok) throw new CustomException(error);
 
     return data;
-}
+};

@@ -43,4 +43,4 @@ export const ImageInput = ({ image, label, name, placeholder, errorMessage, onCh
             <Image src={file?.preview || defaultImage} alt={label || "Image"} className="w-60" />
         </div>
     );
-}
+};

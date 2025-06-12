@@ -13,7 +13,7 @@ export type User = {
     description?: string;
     web?: string;
     cardNumber?: string;
-    cardExpirationDate?: string; 
+    cardExpirationDate?: string;
     cardHolderName?: string;
     cardCVV?: string;
     icon?: string;
@@ -24,4 +24,4 @@ export type User = {
     garments?: Garment[];
     orders?: Order[];
     wishlist?: Wishlist;
-}
+};

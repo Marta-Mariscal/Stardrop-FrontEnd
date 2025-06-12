@@ -30,7 +30,8 @@ export const router = createBrowserRouter([
         path: "/sign-up-company",
         element: <SignUpCompanyPage />,
         loader: checkUnauthLoader
-    },{
+    },
+    {
         path: "/",
         children: [
             { index: true, element: <IndexPage /> },

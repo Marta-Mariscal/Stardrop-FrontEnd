@@ -19,7 +19,7 @@ export type Garment = {
     garmentBase?: string;
     soldOut?: boolean;
     isWishlisted?: boolean;
-    owner?: User; 
+    owner?: User;
     createdAt?: Date;
     updatedAt?: Date;
     __v?: number;

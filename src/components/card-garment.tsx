@@ -30,32 +30,22 @@ export const CardGarment = ({ garment, chips }: CardGarmentProps) => {
                         <div className="flex items-center gap-2 mb-1">
                             <Avatar isBordered color="secondary" src={garment?.owner?.icon} className="size-8" />
                             <p className="text-tiny uppercase font-bold">{garment?.owner?.name}</p>
-                            {garment.type != "new" && garment.soldOut == true &&
-                                <Chip color="danger">SOLD OUT</Chip>
-                            }
+                            {garment.type != "new" && garment.soldOut == true && <Chip color="danger">SOLD OUT</Chip>}
                         </div>
 
                         <h4 className="font-bold text-large">{garment.name}</h4>
-                        {garment.type === "new" ? (
-                            <small className="text-default-500">{garment.price}€</small>
-                        ) : (
-                            <p className="text-tiny text-danger">{garment.price}€</p>
-                        )}
+                        {garment.type === "new" ? <small className="text-default-500">{garment.price}€</small> : <p className="text-tiny text-danger">{garment.price}€</p>}
                     </CardHeader>
 
                     <CardBody className="overflow-visible py-2">
-                        <Image
-                            alt="Card background"
-                            className="aspect-[5/4] w-full h-auto object-cover rounded-xl"
-
-                            src={garment?.image || defaultImage}
-                        />
-
+                        <Image alt="Card background" className="aspect-[5/4] w-full h-auto object-cover rounded-xl" src={garment?.image || defaultImage} />
                     </CardBody>
                     {chips && (
                         <div className="flex flex-row gap-2 px-4 py-2 items-center">
                             {chips.map((chip, index) => (
-                                <Chip key={index} color={chip.color || "default"}>{chip.label}</Chip>
+                                <Chip key={index} color={chip.color || "default"}>
+                                    {chip.label}
+                                </Chip>
                             ))}
                         </div>
                     )}
@@ -63,5 +53,4 @@ export const CardGarment = ({ garment, chips }: CardGarmentProps) => {
             </button>
         </>
     );
-
 };

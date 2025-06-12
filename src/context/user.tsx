@@ -7,8 +7,8 @@ import { checkAuthLoader } from "@/loaders/auth";
 import { redirect } from "react-router-dom";
 
 export function UserProvider({ children }) {
-    const whoami = useUser(state => state.whoami);
-    const clearCart = useCart(state => state.clearCart);
+    const whoami = useUser((state) => state.whoami);
+    const clearCart = useCart((state) => state.clearCart);
 
     const onErrorHandler = (error: Error) => {
         if (error.status === 401) {
@@ -18,7 +18,7 @@ export function UserProvider({ children }) {
         } else {
             checkAuthLoader();
         }
-    }
+    };
 
     useEffect(() => {
         whoami({ onError: onErrorHandler });

@@ -22,7 +22,21 @@ export const SunFilledIcon = ({ size = 24, width, height, ...props }: IconSvgPro
 );
 
 // HEART ICON
-export const HeartIcon = ({ fill = "currentColor", filled, size, height, width, ...props }: { fill?: string; filled?: boolean; size?: number; height?: number; width?: number; [key: string]: any }) => {
+export const HeartIcon = ({
+    fill = "currentColor",
+    filled,
+    size,
+    height,
+    width,
+    ...props
+}: {
+    fill?: string;
+    filled?: boolean;
+    size?: number;
+    height?: number;
+    width?: number;
+    [key: string]: any;
+}) => {
     return (
         <svg fill={filled ? fill : "none"} height={size || height || 24} viewBox="0 0 24 24" width={size || width || 24} xmlns="http://www.w3.org/2000/svg" {...props}>
             <path

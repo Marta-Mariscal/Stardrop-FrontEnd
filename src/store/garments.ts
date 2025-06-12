@@ -11,8 +11,10 @@ interface GarmentsStore {
     error?: Error;
     getGarments: (filters?: GarmentServiceParams, callback?: { onSuccess?: (response: Array<Garment>) => void; onError?: (error: Error) => void; onFinally?: () => void }) => void;
     postGarment: (garment: Garment, callback?: { onSuccess?: (response: Garment) => void; onError?: (error: Error) => void; onFinally?: () => void }) => void;
-    getNewGarments: (filters?: GarmentServiceParams, callback?: { onSuccess?: (response: Array<Garment>) => void; onError?: (error: Error) => void; onFinally?: () => void }) => void;
-
+    getNewGarments: (
+        filters?: GarmentServiceParams,
+        callback?: { onSuccess?: (response: Array<Garment>) => void; onError?: (error: Error) => void; onFinally?: () => void }
+    ) => void;
 }
 
 export const useGarments = create<GarmentsStore>((set, get) => ({
