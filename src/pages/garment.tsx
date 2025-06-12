@@ -31,6 +31,9 @@ export default function GarmentPage() {
 
     const isMine = user?._id === garment?.owner?._id;
     const isCompany = user?.type === "company";
+    const isCustomer = user?.type === "customer";
+    const isNew = garment?.type === "new";
+    const isSoldOut = garment?.soldOut === true;
 
     useEffect(() => {
         setSelectedSize(garment.type !== "new" ? garment.size || "" : "");
@@ -139,52 +142,53 @@ export default function GarmentPage() {
         <DefaultLayout>
             <div className="max-w-6xl mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="flex justify-center items-center">
-                    <Image src={garment.image || defaultImage} alt={garment.name} className="rounded-lg w-full h-auto object-cover" />
+                    <Image src={garment?.image || defaultImage} alt={garment?.name || "Garment image"} className="rounded-lg w-full h-auto object-cover" />
                 </div>
 
                 <div className="flex flex-col justify-between">
                     <div>
-                        <h1 className="text-3xl font-bold mb-2">{garment.name}</h1>
-                        <p className="text-gray-600 mb-4">{garment.description}</p>
+                        <h1 className="text-3xl font-bold mb-2">{garment?.name || "Garment"}</h1>
+                        <p className="text-gray-600 mb-4">{garment?.description || "No description available."}</p>
 
                         <div className="flex flex-wrap items-center gap-2 mb-4">
-                            <Chip color={garment.type === "new" ? "success" : "danger"}>{garment.type}</Chip>
-                            <Chip color="secondary">{garment.category}</Chip>
-                            <Chip color="default">{garment.gender}</Chip>
+                            <Chip color={isNew ? "success" : "danger"}>{garment?.type}</Chip>
+                            <Chip color="secondary">{garment?.category}</Chip>
+                            <Chip color="default">{garment?.gender}</Chip>
+                            <Chip className="capitalize border-none gap-1 text-default-600" color={isSoldOut ? "danger" : "success"} size="sm" variant="dot">
+                                {isSoldOut ? "Sold Out" : "In Stock"}
+                            </Chip>
                         </div>
 
                         <div className="flex items-center gap-2 mb-4">
-                            {garment.colors.map((color) => (
-                                <span key={color} className="w-6 h-6 rounded-full border border-gray-300" style={{ backgroundColor: color }}></span>
-                            ))}
+                            {garment?.colors?.map((color) => <span key={color} className="w-6 h-6 rounded-full border border-gray-300" style={{ backgroundColor: color }}></span>)}
                         </div>
 
-                        {garment?.type == "new" ? (
-                            <h2 className="text-2xl font-semibold text-secondary mb-4">{garment.price.toFixed(2)} €</h2>
+                        {isNew ? (
+                            <h2 className="text-2xl font-semibold text-secondary mb-4">{garment?.price?.toFixed(2)} €</h2>
                         ) : (
-                            <h2 className="text-2xl font-semibold text-danger mb-4">{garment.price.toFixed(2)} €</h2>
+                            <h2 className="text-2xl font-semibold text-danger mb-4">{garment?.price?.toFixed(2)} €</h2>
                         )}
 
-                        {sizes.length > 0 && (
+                        {sizes?.length > 0 && (
                             <div className="mb-4">
                                 <p className="mb-2 font-medium text-sm text-gray-700">Select a size:</p>
                                 <div className="flex flex-wrap gap-2 mb-1">
-                                    {garment.size ? (
+                                    {garment?.size ? (
                                         <button
-                                            key={garment.size}
-                                            onClick={() => setSelectedSize(garment.size)}
+                                            key={garment?.size}
+                                            onClick={() => setSelectedSize(garment?.size)}
                                             className={`px-4 py-2 rounded-full border text-sm font-medium transition ${selectedSize === garment.size ? "bg-secondary text-white border-secondary" : "bg-white text-gray-700 border-gray-300 hover:border-secondary"}`}
-                                            disabled={isCompany}
+                                            disabled={isCompany || isSoldOut}
                                         >
-                                            {garment.size}
+                                            {garment?.size}
                                         </button>
                                     ) : (
-                                        sizes.map((size) => (
+                                        sizes?.map((size) => (
                                             <button
                                                 key={size}
                                                 onClick={() => setSelectedSize(size)}
                                                 className={`px-4 py-2 rounded-full border text-sm font-medium transition ${selectedSize === size ? "bg-secondary text-white border-secondary" : "bg-white text-gray-700 border-gray-300 hover:border-secondary"}`}
-                                                disabled={isCompany}
+                                                disabled={isCompany || isSoldOut}
                                             >
                                                 {size}
                                             </button>
@@ -198,7 +202,7 @@ export default function GarmentPage() {
                         {!isMine && !isCompany && (
                             <>
                                 <div className="flex gap-4">
-                                    {garment?.soldOut != true && (
+                                    {!isSoldOut && (
                                         <Button color="secondary" variant="solid" onPress={handleAddToCart}>
                                             Add to cart
                                         </Button>
@@ -210,28 +214,28 @@ export default function GarmentPage() {
                                         variant="bordered"
                                         onPress={onWishlistHandler}
                                     >
-                                        <HeartIcon className="text-secondary" filled={garment.isWishlisted} />
+                                        <HeartIcon className="text-secondary" filled={garment?.isWishlisted} />
                                     </Button>
                                 </div>
                             </>
                         )}
                     </div>
 
-                    {garment.owner && (
+                    {garment?.owner && (
                         <div className="mt-6">
                             <Divider />
                             <p className="text-sm text-gray-500 mt-2">
-                                Sold by: <span className="font-medium">{garment.owner.name}</span>
+                                Sold by: <span className="font-medium">{garment?.owner?.name || "Unknown"}</span>
                             </p>
                         </div>
                     )}
                 </div>
             </div>
 
-            {garment.type == "new" && !isCompany && (
+            {isNew && !isCompany && (
                 <div className="max-w-6xl mx-auto px-6 mt-16">
                     <h2 className="text-2xl font-bold mb-6">Second Hand:</h2>
-                    {user.type == "customer" && (
+                    {isCustomer && (
                         <Button color="secondary" className="text-sm sm:text-base p-5 mb-6" onPress={goPostGarmentHandler}>
                             Post Garment
                         </Button>
