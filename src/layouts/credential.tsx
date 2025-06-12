@@ -11,7 +11,7 @@ export default function CredentialLayout({ children }: { children: React.ReactNo
                         © {new Date().getFullYear()} <span className="font-bold text-purple-600">Stardrop</span>. All rights reserved.
                     </span>
                     <div className="flex space-x-4 mt-4 sm:mt-0">
-                        <a href="doc" className="text-sm text-gray-600 hover:text-purple-600 transition">
+                        <a href="https://liberating-diplodocus-a07.notion.site/STARDROP-1b4ec2d2f9b8804196f6f038ad7a0ea6?source=copy_link" className="text-sm text-gray-600 hover:text-purple-600 transition">
                             Doc User
                         </a>
                         <a href="https://www.linkedin.com/in/marta-mariscal-velazquez/" className="text-sm text-gray-600 hover:text-purple-600 transition">
