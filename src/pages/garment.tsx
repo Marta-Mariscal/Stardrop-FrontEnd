@@ -41,6 +41,10 @@ export default function GarmentPage() {
         getGarments({ garmentBase: garment._id });
     }, [garment.type]);
 
+    useEffect(() => {
+        setGarment(initGarment);
+    }, [initGarment]);
+
     const goPostGarmentHandler = () => {
         navigate(`/form-post-garment/${garment._id}`, { replace: true });
     };

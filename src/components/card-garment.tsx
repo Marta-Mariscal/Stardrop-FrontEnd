@@ -14,7 +14,7 @@ export const CardGarment = ({ garment, chips }: CardGarmentProps) => {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        navigate(`/garment/${garment._id}`);
+        navigate(`/garment/${garment._id}`, { replace: true });
     };
 
     return (
