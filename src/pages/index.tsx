@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import DefaultLayout from "@/layouts/default";
-import { Spinner, addToast, Pagination } from "@heroui/react";
+import { Spinner, addToast } from "@heroui/react";
 import { useUser } from "@/store/user";
 import { useGarments } from "@/store/garments";
 import { SearchInput } from "@/components/searchInput";

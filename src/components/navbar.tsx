@@ -4,7 +4,6 @@ import { ThemeSwitch } from "@/components/theme-switch";
 import logo from "../../assets/img/stardrop-logo.png";
 import { CartIcon, HeartIcon } from "@/components/icons";
 import { siteConfig } from "@/config/site";
-import { SearchInput } from "./searchInput";
 import { useUser } from "@/store/user";
 
 export const Navbar = () => {
