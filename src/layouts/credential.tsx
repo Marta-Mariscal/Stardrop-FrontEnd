@@ -12,10 +12,7 @@ export default function CredentialLayout({ children }: { children: React.ReactNo
                     </span>
                     <div className="flex space-x-4 mt-4 sm:mt-0">
                         <a href="doc" className="text-sm text-gray-600 hover:text-purple-600 transition">
-                            Privacy Policy
-                        </a>
-                        <a href="doc" className="text-sm text-gray-600 hover:text-purple-600 transition">
-                            Terms of Service
+                            Doc User
                         </a>
                         <a href="https://www.linkedin.com/in/marta-mariscal-velazquez/" className="text-sm text-gray-600 hover:text-purple-600 transition">
                             Contact

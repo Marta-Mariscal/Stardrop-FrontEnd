@@ -45,7 +45,6 @@ export const Navbar = () => {
                         <p className="text-secondary font-bold text-2xl">STARDROP</p>
                     </Link>
                 </NavbarBrand>
-
             </NavbarContent>
 
             <NavbarContent className="hidden sm:flex basis-1/5 sm:basis-full" justify="end">
@@ -77,7 +76,6 @@ export const Navbar = () => {
 
                         </>
                     }
-                    
                     <Button
                         as={Link}
                         className="text-sm font-normal text-default-600 bg-default-100"
@@ -90,12 +88,11 @@ export const Navbar = () => {
             </NavbarContent>
 
             <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
-                <ThemeSwitch />
-                <NavbarMenuToggle />
+                <ThemeSwitch/>
+                <NavbarMenuToggle/>
             </NavbarContent>
 
             <NavbarMenu>
-                <SearchInput />
                 <div className="mx-4 mt-2 flex flex-col gap-2">
                     {siteConfig.navMenuItems.map((item, index) => (
                         <NavbarMenuItem key={`${item}-${index}`}>

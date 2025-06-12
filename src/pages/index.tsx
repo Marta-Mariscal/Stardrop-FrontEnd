@@ -73,9 +73,6 @@ export default function IndexPage() {
                                     <CardGarment key={garment._id} garment={garment} />
                                 ))}
                             </div>
-                            <div className="flex justify-center mt-6 gap-2">
-                                <Pagination showControls initialPage={1} color="secondary" variant="bordered" total={10} />
-                            </div>
                         </>
                     )}
                 </div>
